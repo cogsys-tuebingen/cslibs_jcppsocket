@@ -3,10 +3,9 @@ package msgs;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class DoubleSeq extends SocketMsg {
-	private double[] seq = null; //new ArrayList<java.lang.Double>();
+	private double[] seq = new double[0]; //new ArrayList<java.lang.Double>();
 
 	public DoubleSeq() {
 		super.size = 0;
@@ -19,14 +18,17 @@ public class DoubleSeq extends SocketMsg {
 		super.type = DataType.double_t;
 	}
 
-	public DoubleSeq(final double[] _seq, final long _id) {
+	public DoubleSeq(final double[] _seq, 
+				     final long 	_id) {
 		seq = _seq.clone();
 		super.id = _id;
 		super.size = 8 * seq.length;
 		super.type = DataType.double_t;
 	}
 	
-	public DoubleSeq(final double[] _seq, final long _id, final Hash _hash) {
+	public DoubleSeq(final double[] _seq, 
+					 final long 	_id, 
+					 final Hash 	_hash) {
 		seq = _seq.clone();
 		super.id = _id;
 		super.hash = _hash;
@@ -34,14 +36,15 @@ public class DoubleSeq extends SocketMsg {
 		super.type = DataType.double_t;
 	}	
 
-	public DoubleSeq( long _id, Hash _hash) {
+	public DoubleSeq(final long _id, 
+					 final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 0;
 		super.type = DataType.double_t;
 	}
 
-	public void set(final double[]_seq) {
+	public void set(final double[] _seq) {
 		seq 	   = _seq.clone();
 		super.size = 8 * _seq.length;
 	}
@@ -62,7 +65,11 @@ public class DoubleSeq extends SocketMsg {
 		readSequence(_in);
 	}
 
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long _id, 
+							final Hash _hash, 
+							final int  _type, 
+							final int _size, 
+							DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		readSequence(_in);
 	}

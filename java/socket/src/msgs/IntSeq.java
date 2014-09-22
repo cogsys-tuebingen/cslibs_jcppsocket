@@ -3,50 +3,53 @@ package msgs;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class IntSeq extends SocketMsg {
-	private ArrayList<java.lang.Integer> seq = new ArrayList<Integer>();
+	private int[] seq = new int[0];
 		
 	public IntSeq() {
 		super.size = 0;
 		super.type = DataType.int_t;
 	}
 	
-	public IntSeq(ArrayList<java.lang.Integer> _seq) {
-		seq = new ArrayList<java.lang.Integer>(_seq);
-		super.size = 4 * seq.size();
+	public IntSeq(final int[] _seq) {
+		seq = _seq.clone();
+		super.size = 4 * seq.length;
 		super.type = DataType.int_t;
 	}
 	
-	public IntSeq(ArrayList<java.lang.Integer> _seq, long _id) {
-		seq = new ArrayList<java.lang.Integer>(_seq);
+	public IntSeq(final int[] _seq, 
+				  final long  _id) {
+		seq = _seq.clone();
 		super.id = _id;
-		super.size = 4 * seq.size();
+		super.size = 4 * seq.length;
 		super.type = DataType.int_t;
 	}
 	
-	public IntSeq(ArrayList<java.lang.Integer> _seq, long _id, Hash _hash) {
-		seq = new ArrayList<java.lang.Integer>(_seq);
+	public IntSeq(final int[] _seq, 
+				  final long  _id, 
+				  final Hash  _hash) {
+		seq = _seq.clone();
 		super.id   = _id;
 		super.hash = _hash;
-		super.size = 4 * seq.size();
+		super.size = 4 * seq.length;
 		super.type = DataType.int_t;
 	}
 	
-	public IntSeq( long _id, Hash _hash) {
+	public IntSeq(final long _id, 
+				  final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 0;
 		super.type = DataType.int_t;
 	}
 	
-	void set(ArrayList<java.lang.Integer> _seq) {
-		seq 	   = new ArrayList<java.lang.Integer>(_seq);
-		super.size = 4 * _seq.size();
+	void set(final int[] _seq) {
+		seq 	   = _seq.clone();
+		super.size = 4 * _seq.length;
 	}
 	
-	ArrayList<java.lang.Integer> get() {
+	int[] get() {
 		return seq;
 	}
 	
@@ -62,18 +65,24 @@ public class IntSeq extends SocketMsg {
 		readSequence(_in);
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long _id, 
+							final Hash _hash, 
+							final int  _type, 
+							final int  _size, 
+							DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		readSequence(_in);
 	}
 
-	private void readSequence(DataInputStream _in) throws IOException {
-		long  size = super.size / 4;
-		seq = new ArrayList<java.lang.Integer>();
-		for(long l = 0 ; l < size ; ++l) {
-			seq.add(_in.readInt());
+	private void readSequence(DataInputStream _in)
+			throws IOException {
+		int seqLength = super.size / 4;
+		seq = new int[seqLength];  //new ArrayList<java.lang.Double>();
+		for(int l = 0 ; l < seqLength ; ++l) {
+			seq[l] = _in.readInt();
 		}
 	}
+	
 	
 	public String toString() {
 		String buff = super.toString() + " [ ";

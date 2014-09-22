@@ -11,20 +11,23 @@ public class Int extends SocketMsg {
 		super.size = 4;
 	}
 	
-	public Int(int _value) {
+	public Int(final int _value) {
 		value = _value;
 		super.size = 4;
 		super.type = DataType.int_t;
 	}
 	
-	public Int(int _value, long _id) {
+	public Int(final int  _value, 
+			   final long _id) {
 		value = _value;
 		super.id = _id;
 		super.size = 4;
 		super.type = DataType.int_t;
 	}
 	
-	public Int(int _value, long _id, Hash _hash) {
+	public Int(final int  _value, 
+			   final long _id, 
+			   final Hash _hash) {
 		value      = _value;
 		super.id   = _id;
 		super.hash = _hash;
@@ -32,14 +35,15 @@ public class Int extends SocketMsg {
 		super.type = DataType.int_t;
 	}
 	
-	public Int( long _id, Hash _hash) {
+	public Int(final long _id, 
+			   final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 4;
 		super.type = DataType.int_t;
 	}
 	
-	void set(int _value) {
+	void set(final int _value) {
 		value = _value;
 	}
 	
@@ -57,7 +61,11 @@ public class Int extends SocketMsg {
 		value = _in.readInt();
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long _id, 
+							final Hash _hash, 
+							final int  _type, 
+							final int  _size, 
+							DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		value = _in.readInt();
 		System.out.println(value);

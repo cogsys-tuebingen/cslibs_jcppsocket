@@ -13,20 +13,22 @@ public class Error extends SocketMsg {
 		super.type = DataType.error_t;
 	}
 	
-	public Error(String _msg) {
+	public Error(final String _msg) {
 		msg	   	   = _msg;
 		super.type = DataType.error_t;
 		set(_msg);
 	}
 	
-	public Error(String _msg, long _id) {
+	public Error(final String _msg, long _id) {
 		msg        = _msg;
 		super.id   = _id;
 		super.size = _msg.length();
 		super.type = DataType.error_t;
 	}
 	
-	public Error(String _msg, long _id, Hash _hash) {
+	public Error(final String _msg, 
+				 final long   _id, 
+				 final Hash   _hash) {
 		msg        = _msg;
 		super.id   = _id;
 		super.hash = _hash;
@@ -34,7 +36,8 @@ public class Error extends SocketMsg {
 		set(_msg);
 	}
 	
-	public Error( long _id, Hash _hash) {
+	public Error(final long _id, 
+				 final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 0;
@@ -70,7 +73,11 @@ public class Error extends SocketMsg {
 		msg = String.valueOf(buff.toArray());
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long _id, 
+							final Hash _hash, 
+						    final int  _type, 
+						    final int  _size, 
+						    DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		readString(_in);
 	}

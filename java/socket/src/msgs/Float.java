@@ -12,20 +12,23 @@ public class Float extends SocketMsg {
 		super.type = DataType.float_t;
 	}
 
-	public Float(float _value) {
+	public Float(final float _value) {
 		value	   = _value;
 		super.size = 4;
 		super.type = DataType.float_t;
 	}
 
-	public Float(float _value, long _id) {
+	public Float(final float _value, 
+				 final long _id) {
 		value      = _value;
 		super.id   = _id;
 		super.size = 4;
 		super.type = DataType.float_t;
 	}
 
-	public Float(float _value, long _id, Hash _hash) {
+	public Float(final float _value, 
+				 final long _id, 
+				 final Hash _hash) {
 		value      = _value;
 		super.id   = _id;
 		super.hash = _hash;
@@ -33,14 +36,15 @@ public class Float extends SocketMsg {
 		super.type = DataType.float_t;
 	}
 
-	public Float( long _id, Hash _hash) {
+	public Float(final long _id,
+			     final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 4;
 		super.type = DataType.float_t;
 	}
 
-	void set(float _value) {
+	void set(final float _value) {
 		value = _value;
 	}
 
@@ -58,7 +62,11 @@ public class Float extends SocketMsg {
 		value = _in.readFloat();
 	}
 
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long 		_id, 
+							final Hash 		_hash, 
+							final int  		_type, 
+							final int  		_size, 
+							DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		value = _in.readFloat();
 	}

@@ -12,20 +12,23 @@ public class Double extends SocketMsg {
 		super.type = DataType.double_t;
 	}
 	
-	public Double(double _value) {
+	public Double(final double _value) {
 		value = _value;
 		super.size = 8;
 		super.type = DataType.double_t;
 	}
 	
-	public Double(double _value, long _id) {
+	public Double(final double _value, 
+				  final long   _id) {
 		value = _value;
 		super.id = _id;
 		super.size = 8;
 		super.type = DataType.double_t;
 	}
 	
-	public Double(double _value, long _id, Hash _hash) {
+	public Double(final double _value, 
+				  final long   _id, 
+				  final Hash   _hash) {
 		value      = _value;
 		super.id   = _id;
 		super.hash = _hash;
@@ -33,14 +36,15 @@ public class Double extends SocketMsg {
 		super.type = DataType.double_t;
 	}
 	
-	public Double( long _id, Hash _hash) {
+	public Double(final long _id, 
+				  final Hash _hash) {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 8;
 		super.type = DataType.double_t;
 	}
 	
-	void set(double _value) {
+	void set(final double _value) {
 		value = _value;
 	}
 	
@@ -58,7 +62,11 @@ public class Double extends SocketMsg {
 		value = _in.readDouble();
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
+	public void deserialize(final long 	    _id, 
+							final Hash 		_hash, 
+							final int       _type, 
+							final int 	    _size, 
+							DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		value = _in.readDouble();
 	}
