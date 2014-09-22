@@ -9,7 +9,7 @@ public class GenericDeserializer {
 		Hash hash = new Hash(256); 
 		hash.deserialize(_in);
 		int  type = _in.readInt();
-		long size = _in.readLong();
+		int  size = (int)_in.readLong();
 		
 		SocketMsg msg = null;
 		if(DataType.isSequence(type, size)) {

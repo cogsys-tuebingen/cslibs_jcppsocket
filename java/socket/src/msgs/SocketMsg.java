@@ -8,7 +8,7 @@ public abstract class SocketMsg {
 	protected long id   = 0;
 	protected Hash hash = new Hash(256);
 	protected int  type = -1;
-	protected long size =  0;
+	protected int size =  0;
 	
 	public void serialize(DataOutputStream _out) throws IOException {
 		_out.writeLong(id);
@@ -21,10 +21,10 @@ public abstract class SocketMsg {
 		id   = _in.readLong();
 		hash.deserialize(_in);
 		type = _in.readInt();
-		size = _in.readLong();
+		size = (int)_in.readLong();
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, long _size, DataInputStream _in) throws IOException {
+	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
 		id   = _id;
 		hash = _hash;
 		type = _type;

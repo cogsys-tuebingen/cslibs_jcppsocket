@@ -70,7 +70,7 @@ public class Error extends SocketMsg {
 		msg = String.valueOf(buff.toArray());
 	}
 	
-	public void deserialize(long _id, Hash _hash, int _type, long _size, DataInputStream _in) throws IOException {
+	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		readString(_in);
 	}

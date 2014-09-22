@@ -58,7 +58,7 @@ public class Float extends SocketMsg {
 		value = _in.readFloat();
 	}
 
-	public void deserialize(long _id, Hash _hash, int _type, long _size, DataInputStream _in) throws IOException {
+	public void deserialize(long _id, Hash _hash, int _type, int _size, DataInputStream _in) throws IOException {
 		super.deserialize(_id, _hash, _type, _size, _in);
 		value = _in.readFloat();
 	}
