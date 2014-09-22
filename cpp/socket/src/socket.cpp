@@ -2,6 +2,8 @@
 
 #include "serialize.hpp"
 
+#include <iostream>
+
 namespace {
 template<typename T>
 inline std::string toString(const T &input){

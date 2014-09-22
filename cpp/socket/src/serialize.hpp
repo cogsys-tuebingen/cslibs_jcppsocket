@@ -36,15 +36,23 @@ struct Serializer {
     }
 };
 
-enum Type {error_t = -2,
-           undef_t = -1,
-           char_t = 0,
-           uchar_t,
-           uint_t,
-           int_t,
-           float_t,
-           double_t,
-           hash256_t};
+enum Type {
+    error_t = -2,
+    undef_t = -1,
+    char_t = 0,
+    uchar_t,
+    uint_t,
+    int_t,
+    float_t,
+    double_t,
+    hash256_t};
+
+enum DataOrganization {
+    undef_do = -1,
+    single_do = 0,
+    sequence_do,
+    block_do
+};
 
 template<typename T>
 struct TypeID {

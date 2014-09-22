@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 find_package(Boost REQUIRED system thread)
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 include_directories(
     ${Boost_INCLUDE_DIRS}

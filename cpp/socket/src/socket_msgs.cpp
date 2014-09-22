@@ -12,3 +12,9 @@ template
 class ValueMsg<int>;
 template
 class ValueMsg<float>;
+template
+class BlockMsg<int>;
+template
+class BlockMsg<float>;
+template
+class BlockMsg<double>;
