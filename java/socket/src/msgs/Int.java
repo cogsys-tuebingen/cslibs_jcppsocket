@@ -12,35 +12,39 @@ public class Int extends SocketMsg {
 	}
 	
 	public Int(final int _value) {
-		value = _value;
-		super.size = 4;
-		super.type = DataType.int_t;
+		value         = _value;
+		super.size    = 4;
+		super.type    = DataType.int_t;
+		super.dataOrg = DataType.single_do;
 	}
 	
 	public Int(final int  _value, 
 			   final long _id) {
-		value = _value;
-		super.id = _id;
-		super.size = 4;
-		super.type = DataType.int_t;
+		value         = _value;
+		super.id      = _id;
+		super.size    = 4;
+		super.type    = DataType.int_t;
+		super.dataOrg = DataType.single_do;
 	}
 	
 	public Int(final int  _value, 
 			   final long _id, 
 			   final Hash _hash) {
-		value      = _value;
-		super.id   = _id;
-		super.hash = _hash;
-		super.size = 4;
-		super.type = DataType.int_t;
+		value         = _value;
+		super.id      = _id;
+		super.hash    = _hash;
+		super.size    = 4;
+		super.type    = DataType.int_t;
+		super.dataOrg = DataType.single_do;
 	}
 	
 	public Int(final long _id, 
 			   final Hash _hash) {
-		super.id   = _id;
-		super.hash = _hash;
-		super.size = 4;
-		super.type = DataType.int_t;
+		super.id      = _id;
+		super.hash    = _hash;
+		super.size    = 4;
+		super.type    = DataType.int_t;		
+		super.dataOrg = DataType.single_do;
 	}
 	
 	void set(final int _value) {
@@ -61,12 +65,13 @@ public class Int extends SocketMsg {
 		value = _in.readInt();
 	}
 	
-	public void deserialize(final long _id, 
-							final Hash _hash, 
-							final int  _type, 
-							final int  _size, 
+	public void deserialize(final long 		_id, 
+							final Hash 		_hash, 
+							final int  		_type,
+							final int 		_dataOrg,
+							final int  		_size, 
 							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _size, _in);
+		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
 		value = _in.readInt();
 		System.out.println(value);
 	}

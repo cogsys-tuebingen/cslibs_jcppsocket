@@ -8,40 +8,45 @@ public class DoubleSeq extends SocketMsg {
 	private double[] seq = new double[0]; //new ArrayList<java.lang.Double>();
 
 	public DoubleSeq() {
-		super.size = 0;
-		super.type = DataType.double_t;
+		super.size    = 0;
+		super.type    = DataType.double_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 
 	public DoubleSeq(final double[] _seq) {
-		seq = _seq.clone();
-		super.size = 8 * seq.length;
-		super.type = DataType.double_t;
+		seq 		  = _seq.clone();
+		super.size    = 8 * seq.length;
+		super.type 	  = DataType.double_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 
 	public DoubleSeq(final double[] _seq, 
 				     final long 	_id) {
-		seq = _seq.clone();
-		super.id = _id;
-		super.size = 8 * seq.length;
-		super.type = DataType.double_t;
+		seq 		  = _seq.clone();
+		super.id 	  = _id;
+		super.size	  = 8 * seq.length;
+		super.type 	  = DataType.double_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 	
 	public DoubleSeq(final double[] _seq, 
 					 final long 	_id, 
 					 final Hash 	_hash) {
-		seq = _seq.clone();
-		super.id = _id;
-		super.hash = _hash;
-		super.size = 8 * seq.length;
-		super.type = DataType.double_t;
+		seq 		  = _seq.clone();
+		super.id	  = _id;
+		super.hash    = _hash;
+		super.size    = 8 * seq.length;
+		super.type    = DataType.double_t;
+		super.dataOrg = DataType.sequence_do;
 	}	
 
 	public DoubleSeq(final long _id, 
 					 final Hash _hash) {
-		super.id   = _id;
-		super.hash = _hash;
-		super.size = 0;
-		super.type = DataType.double_t;
+		super.id      = _id;
+		super.hash    = _hash;
+		super.size    = 0;
+		super.type    = DataType.double_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 
 	public void set(final double[] _seq) {
@@ -65,12 +70,13 @@ public class DoubleSeq extends SocketMsg {
 		readSequence(_in);
 	}
 
-	public void deserialize(final long _id, 
-							final Hash _hash, 
-							final int  _type, 
-							final int _size, 
+	public void deserialize(final long 		_id, 
+							final Hash 		_hash, 
+							final int  		_type,
+							final int 		_dataOrg,
+							final int		_size, 
 							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _size, _in);
+		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
 		readSequence(_in);
 	}
 

@@ -73,12 +73,13 @@ public class Error extends SocketMsg {
 		msg = String.valueOf(buff.toArray());
 	}
 	
-	public void deserialize(final long _id, 
-							final Hash _hash, 
-						    final int  _type, 
-						    final int  _size, 
+	public void deserialize(final long 		_id, 
+							final Hash 		_hash, 
+						    final int  		_type,
+						    final int  		_dataOrg,
+						    final int  		_size, 
 						    DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _size, _in);
+		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
 		readString(_in);
 	}
 	

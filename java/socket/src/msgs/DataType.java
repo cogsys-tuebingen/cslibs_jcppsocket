@@ -2,16 +2,21 @@ package msgs;
 
 
 public class DataType {
-	final static int error_t   = -2;
-	final static int undef_t   = -1;
-	final static int char_t    =  0;
-	final static int uchar_t   =  1;
-	final static int uint_t    =  2;
-	final static int int_t     =  3;
-	final static int float_t   =  4;
-	final static int double_t  =  5;
-	final static int hash256_t =  6;
-
+	final static int error_t     = -2;
+	final static int undef_t     = -1;
+	final static int char_t      =  0;
+	final static int uchar_t     =  1;
+	final static int uint_t      =  2;
+	final static int int_t       =  3;
+	final static int float_t     =  4;
+	final static int double_t    =  5;
+	final static int hash256_t   =  6;
+	
+	final static int undef_do    = -1;
+	final static int single_do   =  0;
+	final static int sequence_do =  1;
+	final static int block_do	 =  2;
+	
 	public static SocketMsg getMessage(int type) {
 		switch (type) {
 		case int_t:
@@ -40,24 +45,16 @@ public class DataType {
 		}
 	}	
 	
-	public static boolean isSequence(int type, long size) {
-		switch(type) {
-		case char_t:
-		case uchar_t:
-			return size > 1;
+	public static SocketMsg getBlockMessage(int type){
+		switch (type) {
 		case int_t:
-		case uint_t:
+			return new msgs.IntBlock();
 		case float_t:
-			return size > 4;
+			return new msgs.FloatBlock();
 		case double_t:
-			return size > 8;
-		case hash256_t:
-			return size > 32;
+			return new msgs.DoubleBlock();
 		default:
-			return false;
+			return null;
 		}
-
 	}
-
-
 }

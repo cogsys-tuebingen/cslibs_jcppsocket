@@ -13,35 +13,39 @@ public class FloatSeq extends SocketMsg {
 	}
 	
 	public FloatSeq(final float[] _seq) {
-		seq = _seq.clone();
-		super.size = 4 * seq.length;
-		super.type = DataType.float_t;
+		seq 		  = _seq.clone();
+		super.size    = 4 * seq.length;
+		super.type    = DataType.float_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 	
 	public FloatSeq(final float[] _seq, 
 					final long    _id) {
-		seq = _seq.clone();
-		super.id = _id;
-		super.size = 4 * seq.length;
-		super.type = DataType.float_t;
+		seq           = _seq.clone();
+		super.id      = _id;
+		super.size    = 4 * seq.length;
+		super.type    = DataType.float_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 	
 	public FloatSeq(final float[] _seq, 
 					final long 	  _id, 
 					final Hash    _hash) {
-		seq = _seq.clone();
-		super.id   = _id;
-		super.hash = _hash;
-		super.size = 4 * seq.length;
-		super.type = DataType.float_t;
+		seq           = _seq.clone();
+		super.id      = _id;
+		super.hash    = _hash;
+		super.size    = 4 * seq.length;
+		super.type    = DataType.float_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 	
 	public FloatSeq(final long _id, 
 					final Hash _hash) {
-		super.id   = _id;
-		super.hash = _hash;
-		super.size = 0;
-		super.type = DataType.float_t;
+		super.id      = _id;
+		super.hash    = _hash;
+		super.size    = 0;
+		super.type    = DataType.float_t;
+		super.dataOrg = DataType.sequence_do;
 	}
 	
 	void set(final float[]_seq) {
@@ -65,12 +69,13 @@ public class FloatSeq extends SocketMsg {
 		readSequence(_in);
 	}
 
-	public void deserialize(final long _id, 
-							final Hash _hash, 
-							final int  _type, 
-							final int  _size, 
+	public void deserialize(final long 		_id, 
+							final Hash 		_hash, 
+							final int  		_type,
+							final int 		_dataOrg,
+							final int  		_size, 
 							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _size, _in);
+		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
 		readSequence(_in);
 	}
 	
