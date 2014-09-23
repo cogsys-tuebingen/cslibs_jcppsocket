@@ -43,17 +43,17 @@ int main()
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
 
 
     BlockMsg<double>::Ptr block(new BlockMsg<double>());

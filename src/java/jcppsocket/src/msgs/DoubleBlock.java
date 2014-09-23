@@ -55,6 +55,7 @@ public class DoubleBlock extends SocketMsg {
 		cols       = _block[0].length;
 		rows	   = _block.length;
 		super.size = 8 * rows * cols + 8;
+		block = new double[rows*cols];
 		for(int i = 0 ; i < rows ; ++i) {
 			for(int j = 0 ; j < cols ; ++j) {
 				block[i * cols + j] = _block[i][j];

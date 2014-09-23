@@ -5,7 +5,7 @@ find_package(catkin REQUIRED)
 
 find_package(Boost REQUIRED system thread)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 catkin_package(
   INCLUDE_DIRS include

@@ -56,7 +56,6 @@ public class Server extends Thread
 			Error err = new Error(e.getMessage());
 			write(out, err);
 		}
-
 	}
 
 	private void write(DataOutputStream out, SocketMsg outMsg)
@@ -91,10 +90,15 @@ public class Server extends Thread
 				try {
 					server = serverSocket.accept();
 				} catch(SocketException s) {
+					s.printStackTrace();
 					break;
 				} 
 
-				processData(server);
+				server.setKeepAlive(true);
+//				server.setSoTimeout(1000);
+//				while(server.isConnected()) {
+					processData(server);
+//				}
 
 				server.close();
 
