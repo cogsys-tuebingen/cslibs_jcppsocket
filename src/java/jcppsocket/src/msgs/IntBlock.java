@@ -11,7 +11,7 @@ public class IntBlock extends SocketMsg {
 	private int    cols = 0;
 
 	public IntBlock() {
-		super.size    = 0;
+		super.size    = 8;
 		super.type    = DataType.int_t;
 		super.dataOrg = DataType.block_do;
 
@@ -19,7 +19,7 @@ public class IntBlock extends SocketMsg {
 
 	public IntBlock(final long _id) {
 		super.id      = _id;
-		super.size    = 0;
+		super.size    = 8;
 		super.type    = DataType.int_t;
 		super.dataOrg = DataType.block_do;
 	}
@@ -28,18 +28,39 @@ public class IntBlock extends SocketMsg {
 			final Hash _hash) {
 		super.id      = _id;
 		super.hash    = _hash;
-		super.size    = 0;
+		super.size    = 8;
 		super.type    = DataType.int_t;
 		super.dataOrg = DataType.block_do;
 	}
 
+	public int rows()
+	{
+		return rows;
+	}
+	
+	public int cols()
+	{
+		return cols;
+	}
+	
 	public void set(final int[] _block, 
 					final int   _step) {
 		block 	   = _block.clone();
 		cols       = _step;
 		rows	   = _block.length / _step;
-		super.size = 4 * _block.length;
+		super.size = 4 * _block.length + 8;
 	}
+	
+	public void set(final int[][] _block) {
+		cols       = _block[0].length;
+		rows	   = _block.length;
+		super.size = 4 * rows * cols + 8;
+		for(int i = 0 ; i < rows ; ++i) {
+			for(int j = 0 ; j < cols ; ++j) {
+				block[i * cols + j] = _block[i][j];
+			}
+		}
+	}	
 
 	public int[] get() {
 		return block;

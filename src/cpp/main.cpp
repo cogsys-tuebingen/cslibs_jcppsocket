@@ -69,6 +69,9 @@ int main()
 
     if(socket.connect()) {
         std::cout << "Try request!" << std::endl;
+    } else {
+        std::cout << "No connection!" << std::endl;
+        return 1;
     }
 
     std::cout << "--- sequence ---" << std::endl;
