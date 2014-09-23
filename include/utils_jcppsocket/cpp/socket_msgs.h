@@ -1,14 +1,17 @@
 #ifndef SOCKET_MSGS_H
 #define SOCKET_MSGS_H
 
+/// PROJECT
+#include "hash.hpp"
+
+/// SYSTEM
 #include <ostream>
 #include <istream>
 #include <inttypes.h>
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
-#include "hash.hpp"
-
+namespace utils_jcppsocket {
 class SocketMsg
 {
 public:
@@ -133,5 +136,6 @@ protected:
     unsigned int   rows_;
 };
 //// ----------------------------------------------------------
+}
 
 #endif // SOCKET_MSGS_H

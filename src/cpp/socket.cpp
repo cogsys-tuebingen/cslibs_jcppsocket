@@ -1,8 +1,13 @@
-#include "socket.h"
+/// HEADER
+#include <utils_jcppsocket/cpp/socket.h>
 
-#include "serialize.hpp"
+/// PROJECT
+#include <utils_jcppsocket/cpp/serialize.hpp>
 
+/// SYSTEM
 #include <iostream>
+
+using namespace utils_jcppsocket;
 
 namespace {
 template<typename T>

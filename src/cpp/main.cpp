@@ -1,9 +1,16 @@
+/// HEADER
+#include <utils_jcppsocket/cpp/socket.h>
+
+/// PROJECT
+#include <utils_jcppsocket/cpp/socket_msgs.h>
+
+/// SYSTEM
 #include <iostream>
-#include "socket.h"
-#include "socket_msgs.h"
 #include <boost/assign.hpp>
 
 using namespace std;
+using namespace utils_jcppsocket;
+using namespace serialization;
 
 int main()
 {

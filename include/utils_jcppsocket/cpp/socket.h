@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include "socket_msgs.h"
 
+namespace utils_jcppsocket {
 class Socket
 {
 public:
@@ -31,5 +32,6 @@ private:
     IOSocketPtr       io_socket_;
     IOServicePtr      io_service_;
 };
+}
 
 #endif // SOCKET_H

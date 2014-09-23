@@ -1,23 +1,25 @@
+/// HEADER
 #include "socket_msgs.h"
 
+/// PROJECT
 #include "serialize.hpp"
 
+/// SYSTEM
 #include <stdexcept>
 
-using namespace serialization;
-
+namespace utils_jcppsocket {
 namespace {
 template<typename T>
 inline bool getDataOrg(const int32_t data_org, SocketMsg::Ptr &ptr)
 {
     switch(data_org) {
-    case single_do:
+    case serialization::single_do:
         ptr.reset(new ValueMsg<T>());
         break;
-    case sequence_do:
+    case serialization::sequence_do:
         ptr.reset(new VectorMsg<T>());
         break;
-    case block_do:
+    case serialization::block_do:
         ptr.reset(new BlockMsg<T>());
         break;
     default:
@@ -30,20 +32,20 @@ inline bool getMsg(const int32_t type, const int64_t data_org,
                    SocketMsg::Ptr &ptr)
 {
     switch(type) {
-    case error_t:
+    case serialization::error_t:
         ptr.reset(new ErrorMsg());
         break;
-    case char_t:
+    case serialization::char_t:
         return getDataOrg<char>(data_org, ptr);
-    case uchar_t:
+    case serialization::uchar_t:
         return getDataOrg<unsigned char>(data_org, ptr);
-    case uint_t:
+    case serialization::uint_t:
         return getDataOrg<unsigned int>(data_org, ptr);
-    case int_t:
+    case serialization::int_t:
         return getDataOrg<int>(data_org, ptr);
-    case float_t:
+    case serialization::float_t:
         return getDataOrg<float>(data_org, ptr);
-    case double_t:
+    case serialization::double_t:
         return getDataOrg<double>(data_org, ptr);
     default:
         return false;
@@ -54,10 +56,10 @@ inline bool getMsg(const int32_t type, const int64_t data_org,
 
 void SocketMsg::serialize(std::ostream &out) const
 {
-    Serializer<int64_t> id(id_);
-    Serializer<int32_t> type(type_);
-    Serializer<int32_t> data_org(data_org_);
-    Serializer<int32_t> size(size_);
+    serialization::Serializer<int64_t> id(id_);
+    serialization::Serializer<int32_t> type(type_);
+    serialization::Serializer<int32_t> data_org(data_org_);
+    serialization::Serializer<int32_t> size(size_);
 
     id.serialize(out);
     hash_.serialize(out);
@@ -70,10 +72,10 @@ void SocketMsg::serialize(std::ostream &out) const
 
 void SocketMsg::deserialize(std::istream &in)
 {
-    Serializer<int64_t> id;
-    Serializer<int32_t> type;
-    Serializer<int32_t> data_org;
-    Serializer<int32_t> size;
+    serialization::Serializer<int64_t> id;
+    serialization::Serializer<int32_t> type;
+    serialization::Serializer<int32_t> data_org;
+    serialization::Serializer<int32_t> size;
 
     id.deserialize(in);
     hash_.deserialize(in);
@@ -90,11 +92,11 @@ void SocketMsg::deserialize(std::istream &in)
 
 void SocketMsg::deserializeAny(std::istream &in, SocketMsg::Ptr &msg)
 {
-    Serializer<int64_t> id;
-    Hash256             h;
-    Serializer<int32_t> type;
-    Serializer<int32_t> data_org;
-    Serializer<int32_t> size;
+    serialization::Serializer<int64_t> id;
+    serialization::Hash256             h;
+    serialization::Serializer<int32_t> type;
+    serialization::Serializer<int32_t> data_org;
+    serialization::Serializer<int32_t> size;
 
     id.deserialize(in);
     h.deserialize(in);
@@ -118,7 +120,7 @@ void SocketMsg::deserializeAny(std::istream &in, SocketMsg::Ptr &msg)
 }
 
 SocketMsg::SocketMsg(const int64_t id,
-                     const Hash256 &hash,
+                     const serialization::Hash256 &hash,
                      const int32_t type,
                      const int32_t data_org,
                      const int32_t size) :
@@ -166,22 +168,26 @@ int32_t SocketMsg::byteSize() const
 
 //// ----------------------------------------------------------
 template<typename T>
-ValueMsg<T>::ValueMsg(const int64_t id, const Hash256 &hash) :
-    SocketMsg(id, hash, TypeID<T>::type, single_do, TypeID<T>::size)
+ValueMsg<T>::ValueMsg(const int64_t id, const serialization::Hash256 &hash) :
+    SocketMsg(id,
+              hash,
+              serialization::TypeID<T>::type,
+              serialization::single_do,
+              serialization::TypeID<T>::size)
 {
 }
 
 template<typename T>
 void ValueMsg<T>::serializeData(std::ostream &out) const
 {
-    Serializer<T> s(value_);
+    serialization::Serializer<T> s(value_);
     s.serialize(out);
 }
 
 template<typename T>
 void ValueMsg<T>::deserializeData(std::istream &in)
 {
-    Serializer<T> s;
+    serialization::Serializer<T> s;
     s.deserialize(in);
     value_ = s.value;
 }
@@ -198,8 +204,13 @@ T ValueMsg<T>::get() const
     return value_;
 }
 //// ----------------------------------------------------------
-ErrorMsg::ErrorMsg(const int64_t id, const Hash256 &hash) :
-    SocketMsg(id, hash, error_t, single_do, 0)
+ErrorMsg::ErrorMsg(const int64_t id,
+                   const serialization::Hash256 &hash) :
+    SocketMsg(id,
+              hash,
+              serialization::error_t,
+              serialization::single_do,
+              0)
 {
 }
 
@@ -226,12 +237,13 @@ void ErrorMsg::deserializeData(std::istream &in)
 }
 //// ----------------------------------------------------------
 template<typename T>
-VectorMsg<T>::VectorMsg(const int64_t id, const Hash256 &hash) :
+VectorMsg<T>::VectorMsg(const int64_t id,
+                        const serialization::Hash256 &hash) :
     SocketMsg(id,
               hash,
-              TypeID<T>::type,
-              sequence_do,
-              data_.size() * TypeID<T>::size)
+              serialization::TypeID<T>::type,
+              serialization::sequence_do,
+              data_.size() * serialization::TypeID<T>::size)
 {
 }
 
@@ -253,7 +265,7 @@ template<typename T>
 void VectorMsg<T>::resize(const unsigned int n)
 {
     data_.resize(n);
-    size_ = n * TypeID<T>::size;
+    size_ = n * serialization::TypeID<T>::size;
 }
 
 template<typename T>
@@ -266,7 +278,7 @@ template<typename T>
 void VectorMsg<T>::push_back(const T &value)
 {
     data_.push_back(value);
-    size_ = data_.size() * TypeID<T>::size;
+    size_ = data_.size() * serialization::TypeID<T>::size;
 }
 
 template<typename T>
@@ -280,7 +292,7 @@ template<typename T>
 void VectorMsg<T>::assign(const std::vector<T> &data)
 {
     data_ = data;
-    size_ = data.size() * TypeID<T>::size;
+    size_ = data.size() * serialization::TypeID<T>::size;
 }
 
 template<typename T>
@@ -290,12 +302,13 @@ unsigned int VectorMsg<T>::size() const
 }
 //// ----------------------------------------------------------
 template<typename T>
-BlockMsg<T>::BlockMsg(const int64_t id, const Hash256 &hash) :
+BlockMsg<T>::BlockMsg(const int64_t id,
+                      const serialization::Hash256 &hash) :
     SocketMsg(id,
               hash,
-              TypeID<T>::type,
-              block_do,
-              data_.size() * TypeID<T>::size + sizeof(int32_t) * 2),
+              serialization::TypeID<T>::type,
+              serialization::block_do,
+              data_.size() * serialization::TypeID<T>::size + sizeof(int32_t) * 2),
     cols_(0),
     rows_(0)
 {
@@ -362,7 +375,7 @@ unsigned int BlockMsg<T>::rows() const
 template<typename T>
 void BlockMsg<T>::serializeData(std::ostream &out) const
 {
-    Serializer<int32_t> size_serializer;
+    serialization::Serializer<int32_t> size_serializer;
 
     size_serializer.value = rows_;
     size_serializer.serialize(out);
@@ -379,10 +392,12 @@ void BlockMsg<T>::deserializeData(std::istream &in)
     int32_t size = (size_ - 2 * sizeof(int32_t)) / sizeof(T);
     data_.resize(size);
 
-    Serializer<int32_t> size_serializer;
+    serialization::Serializer<int32_t> size_serializer;
     size_serializer.deserialize(in);
     rows_ = size_serializer.value;
     size_serializer.deserialize(in);
     cols_ = size_serializer.value;
     in >> data_;
 }
+}
+

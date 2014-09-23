@@ -1,13 +1,16 @@
 #ifndef SERIALIZE_HPP
 #define SERIALIZE_HPP
 
+/// SYSTEM
 #include <ostream>
 #include <vector>
 #include <inttypes.h>
+
+/// PROJECT
 #include "hash.hpp"
 
+namespace utils_jcppsocket {
 namespace serialization {
-
 template<typename T>
 struct Serializer {
     union {
@@ -101,8 +104,7 @@ struct TypeID<Hash<256> > {
     const static int type = hash256_t;
     const static int size = sizeof(Hash<256>);
 };
-
-
+}
 inline std::ostream& operator << (std::ostream &out, const std::string &str)
 {
     for(unsigned int i = 0 ; i < str.size() ; ++i)
@@ -118,7 +120,7 @@ inline std::istream& operator >> (std::istream &in, std::string &str)
 template<typename T>
 inline std::ostream& operator << (std::ostream &out, const std::vector<T> &data)
 {
-    Serializer<T> s;
+    serialization::Serializer<T> s;
     for(typename std::vector<T>::const_iterator
         it = data.begin() ;
         it != data.end() ;
@@ -131,7 +133,7 @@ inline std::ostream& operator << (std::ostream &out, const std::vector<T> &data)
 template<typename T>
 inline std::istream& operator >> (std::istream &in, std::vector<T> &data)
 {
-    Serializer<T> s;
+    serialization::Serializer<T> s;
     unsigned int size  = data.size();
 
     for(unsigned int i = 0 ; i < size ; ++i) {
@@ -142,5 +144,4 @@ inline std::istream& operator >> (std::istream &in, std::vector<T> &data)
     return in;
 }
 }
-
 #endif // SERIALIZE_HPP

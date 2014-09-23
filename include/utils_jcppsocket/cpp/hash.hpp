@@ -1,10 +1,12 @@
 #ifndef HASH_HPP
 #define HASH_HPP
 
+/// SYSTEM
 #include <ostream>
 #include <istream>
 #include <stdint.h>
 
+namespace utils_jcppsocket {
 namespace serialization {
 
 template<int n_bits>
@@ -38,6 +40,7 @@ struct Hash {
 
 typedef Hash<256> Hash256;
 
+}
 }
 
 #endif // HASH_HPP

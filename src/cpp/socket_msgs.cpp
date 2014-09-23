@@ -1,4 +1,7 @@
-#include "socket_msgs.hpp"
+/// PROJECT
+#include <utils_jcppsocket/cpp/socket_msgs.hpp>
+
+using namespace utils_jcppsocket;
 
 template
 class VectorMsg<double>;
