@@ -106,7 +106,7 @@ void SocketMsg::deserializeAny(std::istream &in, SocketMsg::Ptr &msg)
 
     if(!getMsg(type.value, data_org.value, msg)) {
         ErrorMsg *err = new ErrorMsg;
-        err->set("Unkown message type!");
+        err->set("Unkown message type or data organization!");
         msg.reset(err);
     } else {
         msg->id_       = id.value;
@@ -117,6 +117,28 @@ void SocketMsg::deserializeAny(std::istream &in, SocketMsg::Ptr &msg)
         msg->deserializeData(in);
     }
 
+}
+
+void SocketMsg::deserializeAny(const int64_t    id,
+                               const serialization::Hash256 &hash,
+                               const int32_t    type,
+                               const int32_t    data_org,
+                               const int32_t    size,
+                               std::istream    &in,
+                               SocketMsg::Ptr  &msg)
+{
+    if(!getMsg(type, data_org, msg)) {
+        ErrorMsg *err = new ErrorMsg;
+        err->set("Unkown message type or data organization!");
+        msg.reset(err);
+    } else {
+        msg->id_       = id;
+        msg->hash_     = hash;
+        msg->type_     = type;
+        msg->data_org_ = data_org;
+        msg->size_     = size;
+        msg->deserializeData(in);
+    }
 }
 
 SocketMsg::SocketMsg(const int64_t id,
@@ -164,6 +186,23 @@ int32_t SocketMsg::dataOrganization() const
 int32_t SocketMsg::byteSize() const
 {
     return size_;
+}
+//// ----------------------------------------------------------
+LogOffMsg::LogOffMsg(const int64_t id, const serialization::Hash256 &hash) :
+    SocketMsg(id,
+              hash,
+              serialization::logoff_t,
+              serialization::single_do,
+              0)
+{
+}
+
+void LogOffMsg::serializeData(std::ostream &out) const
+{
+}
+
+void LogOffMsg::deserializeData(std::istream &in)
+{
 }
 
 //// ----------------------------------------------------------

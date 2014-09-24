@@ -22,12 +22,18 @@ public:
 
     bool connect();
 
-    bool query(SocketMsg::Ptr &in, SocketMsg::Ptr &out);
+    bool disconnect();
+
+    bool query(SocketMsg::Ptr &request, SocketMsg::Ptr &response);
+
+    bool isConnected() const;
 
 
 private:
     const std::string server_name_;
     const int         server_port_;
+
+    bool              connected_;
 
     IOSocketPtr       io_socket_;
     IOServicePtr      io_service_;

@@ -2,6 +2,7 @@ package msgs;
 
 
 public class DataType {
+	final static int logoff_t	 = -3;
 	final static int error_t     = -2;
 	final static int undef_t     = -1;
 	final static int char_t      =  0;
@@ -27,6 +28,8 @@ public class DataType {
 			return new msgs.Double();
 		case error_t:
 			return new msgs.Error();
+		case logoff_t:
+			return new msgs.LogOff();
 		default:
 			return null;
 		}

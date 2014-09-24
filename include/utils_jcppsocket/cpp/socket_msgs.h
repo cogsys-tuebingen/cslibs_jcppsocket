@@ -20,6 +20,12 @@ public:
     void        serialize     (std::ostream &out) const;
     void        deserialize   (std::istream &in);
     static void deserializeAny(std::istream &in, SocketMsg::Ptr &msg);
+    static void deserializeAny(const int64_t id,
+                               const serialization::Hash256 &hash,
+                               const int32_t type,
+                               const int32_t data_org,
+                               const int32_t size,
+                               std::istream &in, Ptr &msg);
 
     int64_t                id()       const;
     serialization::Hash256 hash()     const;
@@ -43,6 +49,18 @@ protected:
 
     virtual void deserializeData(std::istream &in) = 0;
     virtual void serializeData  (std::ostream &out) const = 0;
+};
+//// ----------------------------------------------------------
+class LogOffMsg : public SocketMsg {
+public:
+    typedef boost::shared_ptr<LogOffMsg> Ptr;
+
+    LogOffMsg(const int64_t id = 0,
+              const serialization::Hash256 &hash = serialization::Hash256());
+
+protected:
+    void serializeData  (std::ostream &out) const;
+    void deserializeData(std::istream &in);
 };
 
 //// ----------------------------------------------------------

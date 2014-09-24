@@ -9,6 +9,8 @@ public class Int extends SocketMsg {
 		
 	public Int() {
 		super.size = 4;
+		super.type    = DataType.int_t;
+		super.dataOrg = DataType.single_do;
 	}
 	
 	public Int(final int _value) {

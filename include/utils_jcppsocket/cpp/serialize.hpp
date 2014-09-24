@@ -40,9 +40,10 @@ struct Serializer {
 };
 
 enum Type {
-    error_t = -2,
-    undef_t = -1,
-    char_t = 0,
+    logoff_t = -3,
+    error_t  = -2,
+    undef_t  = -1,
+    char_t   =  0,
     uchar_t,
     uint_t,
     int_t,

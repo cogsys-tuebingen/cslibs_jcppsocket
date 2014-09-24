@@ -11,7 +11,6 @@ public class Float extends SocketMsg {
 		super.size    = 4;
 		super.type    = DataType.float_t;
 		super.dataOrg = DataType.single_do;
-
 	}
 
 	public Float(final float _value) {

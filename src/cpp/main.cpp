@@ -43,17 +43,17 @@ int main()
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
     block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
-//    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
+    block_data.insert(block_data.end(), wrap_seq_data.begin(), wrap_seq_data.end());
 
 
     BlockMsg<double>::Ptr block(new BlockMsg<double>());
@@ -76,26 +76,26 @@ int main()
 
     std::cout << "--- sequence ---" << std::endl;
     boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
-    //    if(socket.query(out,in)) {
-    //        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
-    //        VectorMsg<double>::Ptr dat = boost::dynamic_pointer_cast<VectorMsg<double> >(in);
+    if(socket.query(out,in)) {
+        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
+        VectorMsg<double>::Ptr dat = boost::dynamic_pointer_cast<VectorMsg<double> >(in);
 
-    //        if(err.get() != NULL) {
-    //            std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
-    //        }
+        if(err.get() != NULL) {
+            std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
+        }
 
-    //        if(dat.get() != NULL) {
-    //            boost::posix_time::time_duration dur = boost::posix_time::microsec_clock::local_time() - start;
-    //            std::cout << "time retrieval: " << dur.total_nanoseconds() / 1000000.0 << "ms" << std::endl;
+        if(dat.get() != NULL) {
+            boost::posix_time::time_duration dur = boost::posix_time::microsec_clock::local_time() - start;
+            std::cout << "time retrieval: " << dur.total_nanoseconds() / 1000000.0 << "ms" << std::endl;
 
-    //            std::cout << "[";
-    //            for(unsigned int i = 0 ; i < dat->size() ; ++i) {
-    //                std::cout << " " << dat->at(i);
-    //            }
-    //            std::cout << " ] " << std::endl;
-    //        }
+            std::cout << "[";
+            for(unsigned int i = 0 ; i < dat->size() ; ++i) {
+                std::cout << " " << dat->at(i);
+            }
+            std::cout << " ] " << std::endl;
+        }
 
-    //    }
+    }
 
     std::cout << "--- block ---" << std::endl;
 
@@ -128,6 +128,8 @@ int main()
 
     }
 
+    if(!socket.disconnect())
+        std::cerr << "error disconnecting!" << std::endl;
 
     return 0;
 }

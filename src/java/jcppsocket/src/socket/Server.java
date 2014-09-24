@@ -10,6 +10,7 @@ import java.net.SocketTimeoutException;
 
 import msgs.Error;
 import msgs.GenericDeserializer;
+import msgs.LogOff;
 import msgs.SocketMsg;
 
 public class Server extends Thread
@@ -31,7 +32,7 @@ public class Server extends Thread
 		processor = null;
 	}
 
-	private void processData(Socket _server) throws IOException {
+	private boolean processData(Socket _server) throws IOException {
 		DataInputStream  in  = new DataInputStream(_server.getInputStream());
 		DataOutputStream out = new DataOutputStream(_server.getOutputStream());
 
@@ -39,6 +40,11 @@ public class Server extends Thread
 			SocketMsg inMsg = read(in);
 
 			if(inMsg != null) {
+				if(inMsg instanceof LogOff) {
+					_server.close();
+					return false;
+				}
+				
 				if(processor == null) {
 					System.out.println(inMsg.toString());
 					write(out, inMsg);					
@@ -56,6 +62,7 @@ public class Server extends Thread
 			Error err = new Error(e.getMessage());
 			write(out, err);
 		}
+		return true;
 	}
 
 	private void write(DataOutputStream out, SocketMsg outMsg)
@@ -81,7 +88,7 @@ public class Server extends Thread
 	/// ---- Thread Part ---- ///
 	public void run()
 	{
-		System.out.println("Opened!");
+		System.out.println("Services of crazy achmed are offered now!");
 		while(!interrupted())
 		{
 			try
@@ -94,21 +101,19 @@ public class Server extends Thread
 					break;
 				} 
 
-				server.setKeepAlive(true);
-//				server.setSoTimeout(1000);
-//				while(server.isConnected()) {
-					processData(server);
-//				}
+				while(processData(server)) {
+					// System.out.println("Thank you for using this service!");
+				}
 
 				server.close();
 
 			} catch(SocketTimeoutException s) {
-				System.out.println("No data to receive!");
+				System.out.println("No client approaches the service!");
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Closed!");
+		System.out.println("Crazy Achmed closed his service agency!");
 	}
 
 	public void interrupt() {
