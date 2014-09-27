@@ -29,7 +29,12 @@ inline void aquire(const std::string    name,
     boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
     socket.reset(new boost::asio::ip::tcp::socket(*service));
+
+#if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::connect(*socket, endpoint_iterator);
+#else
+#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#endif
 }
 
 inline void writeOut(const SocketMsg::Ptr         &data,
@@ -53,8 +58,11 @@ inline void readIn(SocketMsg::Ptr               &data,
 {
     boost::asio::streambuf    header_stream;
     boost::system::error_code err;
-
+#if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::read(in, header_stream, boost::asio::transfer_exactly(52 + 4), err);
+#else
+#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#endif
 
     if(err)
         throw boost::system::system_error(err);
@@ -81,7 +89,11 @@ inline void readIn(SocketMsg::Ptr               &data,
 
 
     boost::asio::streambuf data_stream;
+#if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::read(in,  data_stream, boost::asio::transfer_exactly(size.value + 4), err);
+#else
+#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#endif
 
     if(err)
         throw boost::system::system_error(err);

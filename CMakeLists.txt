@@ -31,6 +31,8 @@ add_library(utils_jcppsocket
 
 target_link_libraries(utils_jcppsocket
     ${Boost_LIBRARIES}
+    ${catkin_LIBRARIES}
+    pthread
 )
 
 add_executable(utils_jcppsocket_test
