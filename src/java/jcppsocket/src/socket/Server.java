@@ -41,7 +41,6 @@ public class Server extends Thread
 
 			if(inMsg != null) {
 				if(inMsg instanceof LogOff) {
-					_server.close();
 					return false;
 				}
 				
