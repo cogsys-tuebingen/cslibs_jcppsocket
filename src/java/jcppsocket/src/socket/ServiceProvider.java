@@ -2,6 +2,6 @@ package socket;
 
 import msgs.SocketMsg;
 
-public interface ServerProcessor {
+public interface ServiceProvider {
 	public SocketMsg process(SocketMsg _in);
 }

@@ -16,7 +16,7 @@ import msgs.SocketMsg;
 public class Server extends Thread
 {
 	private ServerSocket    serverSocket;
-	private ServerProcessor processor = null;
+	private ServiceProvider processor = null;
 
 	public Server(int _port) throws IOException
 	{
@@ -24,7 +24,7 @@ public class Server extends Thread
 		serverSocket.setSoTimeout(10000);
 	}
 
-	public void registerProcessor(ServerProcessor _sp) {
+	public void registerProcessor(ServiceProvider _sp) {
 		processor = _sp;
 	}
 
