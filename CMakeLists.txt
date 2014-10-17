@@ -23,10 +23,14 @@ include_directories(
 add_library(utils_jcppsocket
     include/utils_jcppsocket/cpp/serialize.hpp
     include/utils_jcppsocket/cpp/socket_msgs.hpp
+    include/utils_jcppsocket/cpp/service_provider.hpp
     include/utils_jcppsocket/cpp/hash.hpp
+    include/utils_jcppsocket/cpp/socket.h
+    include/utils_jcppsocket/cpp/server_socket.h
 
     src/cpp/socket.cpp
     src/cpp/socket_msgs.cpp
+    src/cpp/server_socket.cpp
 )
 
 target_link_libraries(utils_jcppsocket
@@ -35,10 +39,18 @@ target_link_libraries(utils_jcppsocket
     pthread
 )
 
-add_executable(utils_jcppsocket_test
-    src/cpp/main.cpp
+add_executable(utils_jcppsocket_test_client
+    src/cpp/test_client.cpp
 )
 
-target_link_libraries(utils_jcppsocket_test
+target_link_libraries(utils_jcppsocket_test_client
+    utils_jcppsocket
+)
+
+add_executable(utils_jcppsocket_test_server
+    src/cpp/test_server.cpp
+)
+
+target_link_libraries(utils_jcppsocket_test_server
     utils_jcppsocket
 )

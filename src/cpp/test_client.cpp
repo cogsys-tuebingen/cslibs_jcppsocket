@@ -61,7 +61,7 @@ int main()
 
 
     /// --- test --- ////
-    Socket              socket("localhost", 6666);
+    SyncSocket              socket("localhost", 6666);
 
 
     SocketMsg::Ptr out = boost::dynamic_pointer_cast<SocketMsg>(seq);

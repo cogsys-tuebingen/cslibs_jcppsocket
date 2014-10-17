@@ -1,24 +1,19 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#include <boost/shared_ptr.hpp>
-#include <boost/asio.hpp>
-#include "socket_msgs.h"
+#include "io.hpp"
 
 namespace utils_jcppsocket {
-class Socket
+class SyncSocket
 {
 public:
-    typedef boost::shared_ptr<Socket> Ptr;
-    typedef boost::shared_ptr
-            <boost::asio::ip::tcp::socket> IOSocketPtr;
-    typedef boost::shared_ptr
-            <boost::asio::io_service> IOServicePtr;
+    typedef boost::shared_ptr<SyncSocket> Ptr;
 
-    Socket(const std::string &server,
-           const int port);
 
-    virtual ~Socket();
+    SyncSocket(const std::string &server,
+               const int port);
+
+    virtual ~SyncSocket();
 
     bool connect();
 
@@ -35,8 +30,8 @@ private:
 
     bool              connected_;
 
-    IOSocketPtr       io_socket_;
-    IOServicePtr      io_service_;
+    io::IOSocketPtr   io_socket_;
+    io::IOServicePtr  io_service_;
 };
 }
 
