@@ -12,6 +12,7 @@ ServerSocket::ServerSocket(const int port) :
 
 ServerSocket::~ServerSocket()
 {
+    stopService();
 }
 
 bool ServerSocket::startService()
@@ -90,6 +91,9 @@ void ServerSocket::run()
 
         bool session_active = true;
         while(session_active) {
+            if(boost::this_thread::interruption_requested())
+                break;
+
             SocketMsg::Ptr request;
             SocketMsg::Ptr response;
             try {

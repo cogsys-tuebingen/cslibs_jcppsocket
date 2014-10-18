@@ -34,7 +34,10 @@ inline bool getMsg(const int32_t type, const int64_t data_org,
     switch(type) {
     case serialization::error_t:
         ptr.reset(new ErrorMsg());
-        break;
+        return true;
+    case serialization::logoff_t:
+        ptr.reset(new LogOffMsg);
+        return true;
     case serialization::char_t:
         return getDataOrg<char>(data_org, ptr);
     case serialization::uchar_t:
