@@ -87,7 +87,7 @@ public class Server extends Thread
 	/// ---- Thread Part ---- ///
 	public void run()
 	{
-		System.out.println("Services of crazy achmed are offered now!");
+		System.out.println("Services are available!");
 		while(!interrupted())
 		{
 			try
@@ -112,7 +112,7 @@ public class Server extends Thread
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Crazy Achmed closed his service agency!");
+		System.out.println("Services are shut down!");
 	}
 
 	public void interrupt() {
