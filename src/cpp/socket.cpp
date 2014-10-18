@@ -51,7 +51,7 @@ bool SyncSocket::disconnect()
 
     try {
         SocketMsg::Ptr logoff(new LogOffMsg);
-        writeOut(logoff, *io_socket_);
+        client::write(logoff, *io_socket_);
         connected_ = false;
     } catch(std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -70,10 +70,10 @@ bool SyncSocket::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
 
     try {
 
-        writeOut(request, *io_socket_);
-        readIn(response, *io_socket_);
+        client::write(request, *io_socket_);
+        client::read(response, *io_socket_);
 
-    } catch(std::exception &e) {
+    } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return false;
     }

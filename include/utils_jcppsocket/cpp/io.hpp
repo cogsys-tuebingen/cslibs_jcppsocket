@@ -51,19 +51,22 @@ inline void aquireServerSocket(const int          port,
                                IOServicePtr      &service,
                                IOServerSocketPtr &socket)
 {
-    const static boost::asio::ip::tcp::v4 VERSION;
-    socket.reset(new boost::asio::ip::tcp::acceptor(*service,
-                 boost::asio::ip::tcp::endpoint(VERSION, port)));
+    socket.reset(new boost::asio::ip::tcp::acceptor(
+                *service,
+                 boost::asio::ip::tcp::endpoint(
+                     boost::asio::ip::tcp::v4(),
+                 port)));
 }
 
+template<int Magic_A, int Magic_B>
 inline void writeOut(const SocketMsg::Ptr         &data,
                      boost::asio::ip::tcp::socket &out)
 {
     boost::asio::streambuf request;
     std::ostream           request_buffer(&request);
 
-    const static serialization::Serializer<int32_t> magic_a(23);
-    const static serialization::Serializer<int32_t> magic_b(42);
+    const static serialization::Serializer<int32_t> magic_a(Magic_A /*23*/);
+    const static serialization::Serializer<int32_t> magic_b(Magic_B /*42*/);
 
     magic_a.serialize(request_buffer);
     data->serialize(request_buffer);
@@ -72,6 +75,7 @@ inline void writeOut(const SocketMsg::Ptr         &data,
     boost::asio::write(out, request);
 }
 
+template<int Magic_A, int Magic_B>
 inline void readIn(SocketMsg::Ptr               &data,
                    boost::asio::ip::tcp::socket &in)
 {
@@ -88,8 +92,8 @@ inline void readIn(SocketMsg::Ptr               &data,
 
     std::istream header_buff(&header_stream);
 
-    serialization::Serializer<int32_t> magic_a(23);
-    serialization::Serializer<int32_t> magic_b(42);
+    serialization::Serializer<int32_t> magic_a(Magic_A /*23*/);
+    serialization::Serializer<int32_t> magic_b(Magic_B /*42*/);
     serialization::Serializer<int64_t> id;
     serialization::Serializer<int32_t> type;
     serialization::Serializer<int32_t> data_org;
@@ -103,7 +107,7 @@ inline void readIn(SocketMsg::Ptr               &data,
     data_org.deserialize(header_buff);
     size.deserialize(header_buff);
 
-    if(magic_a.value != 42)
+    if(magic_a.value != Magic_A)
         throw std::logic_error("Wrong message initializer!");
 
 
@@ -127,8 +131,36 @@ inline void readIn(SocketMsg::Ptr               &data,
                               data_buff, data);
 
     magic_b.deserialize(data_buff);
-    if(magic_b.value != 23)
+    if(magic_b.value != Magic_B)
         throw std::logic_error("Wrong message terminator!");
+}
+
+namespace client {
+inline void read(SocketMsg::Ptr &data,
+                   boost::asio::ip::tcp::socket &in)
+{
+    readIn<42,23>(data, in);
+}
+
+inline void write(const SocketMsg::Ptr &data,
+                     boost::asio::ip::tcp::socket &out)
+{
+    writeOut<23,42>(data, out);
+}
+}
+
+namespace server {
+inline void read(SocketMsg::Ptr &data,
+                 boost::asio::ip::tcp::socket &in)
+{
+    readIn<23,42>(data, in);
+}
+
+inline void write(const SocketMsg::Ptr &data,
+                  boost::asio::ip::tcp::socket &out)
+{
+    writeOut<42,23>(data, out);
+}
 }
 }
 }

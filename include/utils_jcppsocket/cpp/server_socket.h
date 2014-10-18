@@ -21,10 +21,11 @@ public:
     bool unregisterProvider();
 
 private:
-    const int             server_port_;
-    io::IOServerSocketPtr io_socket_;
-    io::IOServicePtr      io_service_;
-    ServiceProvider::Ptr  provider_;
+    const int               server_port_;
+    io::IOSocketPtr         io_session_;
+    io::IOServerSocketPtr   io_socket_;
+    io::IOServicePtr        io_service_;
+    ServiceProvider::Ptr    provider_;
 
     bool          running_;
 

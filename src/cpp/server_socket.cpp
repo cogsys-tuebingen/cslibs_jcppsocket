@@ -41,13 +41,13 @@ void ServerSocket::stopService()
 
     th_.interrupt();
     th_.join();
-    runnning_ = false;
-    return true;
+    io_service_->stop();
+    running_ = false;
 }
 
 bool ServerSocket::isRunnning()
 {
-    return runnning_;
+    return running_;
 }
 
 bool ServerSocket::registerProvider(const ServiceProvider::Ptr &provider)
@@ -74,10 +74,50 @@ bool ServerSocket::unregisterProvider()
 
 void ServerSocket::run()
 {
-    bool stopped = false;
-
     while(running_) {
-        /// add interruption point !
+        if(boost::this_thread::interruption_requested())
+            break;
 
+        io_session_.reset(new boost::asio::ip::tcp::socket(*io_service_));
+        boost::system::error_code err;
+        io_socket_->accept(*io_session_, err);
+
+        if(err) {
+            std::cerr << "Error: Acception failed with code '" << err << "'!" << std::endl;
+            io_session_.reset();
+            continue;
+        }
+
+        bool session_active = true;
+        while(session_active) {
+            SocketMsg::Ptr request;
+            SocketMsg::Ptr response;
+            try {
+                server::read(request, *io_session_);
+            } catch (const std::exception &e) {
+                std::cerr << e.what() << std::endl;
+                break;
+            }
+
+            LogOffMsg::Ptr logoff = boost::dynamic_pointer_cast<LogOffMsg>(request);
+            if(logoff) {
+                session_active = false;
+                break;
+            }
+
+            if(provider_) {
+                provider_->process(request, response);
+            } else {
+                response = request;
+            }
+
+            try {
+                server::write(response, *io_session_);
+            } catch (const std::exception &e) {
+                std::cerr << e.what() << std::endl;
+                break;
+            }
+        }
     }
+    running_ = false;
 }

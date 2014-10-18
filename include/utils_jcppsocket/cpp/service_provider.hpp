@@ -8,8 +8,8 @@ class ServiceProvider {
 public:
     typedef boost::shared_ptr<ServiceProvider> Ptr;
 
-    void process(const SocketMsg::Ptr &input,
-                       SocketMsg::Ptr &output) = 0;
+    virtual void process(const SocketMsg::Ptr &input,
+                               SocketMsg::Ptr &output) = 0;
 
 protected:
     ServiceProvider()
