@@ -110,12 +110,14 @@ inline std::ostream& operator << (std::ostream &out, const std::string &str)
 {
     for(unsigned int i = 0 ; i < str.size() ; ++i)
         out << str.at(i);
+    return out;
 }
 
 inline std::istream& operator >> (std::istream &in, std::string &str)
 {
     for(unsigned int i = 0 ; i < str.size() ; ++i)
         str.at(i) = in.get();
+    return in;
 }
 
 template<typename T>
@@ -129,6 +131,7 @@ inline std::ostream& operator << (std::ostream &out, const std::vector<T> &data)
         s.value = *it;
         s.serialize(out);
     }
+    return out;
 }
 
 template<typename T>
