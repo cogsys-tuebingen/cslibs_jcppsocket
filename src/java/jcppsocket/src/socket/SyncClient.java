@@ -6,14 +6,18 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import msgs.Error;
 import msgs.GenericDeserializer;
+import msgs.LogOff;
 import msgs.SocketMsg;
 
 public class SyncClient {
-	private String serverName;
-	private int    serverPort;
-	private Socket socket = null;
-
+	private String 		     serverName;
+	private int    			 serverPort;
+	private Socket 			 socket   = null;
+	private DataInputStream  diStream = null;
+	private DataOutputStream doStream = null;
+	
 	public SyncClient(final String serverName, 
 					  final int	   serverPort) {
 		this.serverName = serverName;
@@ -23,12 +27,12 @@ public class SyncClient {
 	public boolean connect() {
 		if(socket == null) {
 			try {
-				socket = new Socket(serverName, serverPort);
+				socket   = new Socket(serverName, serverPort);
+				diStream = new DataInputStream(socket.getInputStream());
+				doStream = new DataOutputStream(socket.getOutputStream());
 			} catch (UnknownHostException e) {
-				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				e.printStackTrace();
 				return false;
 			}
 		}
@@ -42,31 +46,36 @@ public class SyncClient {
 		}
 		
 		try {
+			LogOff logoff = new LogOff();
+			write(logoff);
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			socket = null;
+			socket   = null;
+			doStream = null;
+			diStream = null;
 			return false;
 		}
-		
+
+		doStream = null;
+		diStream = null;
 		socket = null;
 		return true;
 	}
 
-	public boolean query(SocketMsg out, SocketMsg in) {
-		try {
-			DataInputStream  inStr  = new DataInputStream(socket.getInputStream());
-			DataOutputStream outStr = new DataOutputStream(socket.getOutputStream());
-			
-			write(outStr, out);
-			read(inStr, in);
-			
-		} catch (IOException e) {
-			in = new msgs.Error(e.toString());
-			e.printStackTrace();
+	public SocketMsg query(SocketMsg out) {
+		if(socket == null || !socket.isConnected()) {
+			return new msgs.Error("Socket not connected!");
 		}
 		
-		return true;
+		try {
+			
+			write(out);
+			return read();
+			
+		} catch (IOException e) {
+			return new msgs.Error(e.toString());
+		}
 	}
 
 	public boolean isConnected() {
@@ -77,27 +86,24 @@ public class SyncClient {
 		return this.socket.isConnected();
 	}
 	
-	private void write(DataOutputStream out, SocketMsg outMsg)
+	private void write(SocketMsg outMsg)
 			throws IOException {
-		out.writeInt(23);
-		outMsg.serialize(out);
-		out.writeInt(42);
+		doStream.writeInt(23);
+		outMsg.serialize(doStream);
+		doStream.writeInt(42);
 	}
 	
-	private void read(DataInputStream in, SocketMsg inMsg) throws IOException {
-		int init = in.readInt();
-		if(init != 42)
-			throw new IOException("Wrong message initializer " + init + " !");
+	private SocketMsg read() throws IOException {
+		int magicA = diStream.readInt();
+		if(magicA != 42)
+			throw new IOException("Wrong message initializer " + magicA + " !");
 
-		inMsg = GenericDeserializer.deserialize(in);
+		SocketMsg inMsg = GenericDeserializer.deserialize(diStream);
 
-		int exit = in.readInt();
-		if(exit != 23) 
-			throw new IOException("Wrong message terminator " + exit + " !");
+		int magicB = diStream.readInt();
+		if(magicB != 23) 
+			throw new IOException("Wrong message terminator " + magicB + " !");
 		
+		return inMsg;
 	}
-
-
-
-
 }
