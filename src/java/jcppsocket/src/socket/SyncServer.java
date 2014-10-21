@@ -13,23 +13,23 @@ import msgs.GenericDeserializer;
 import msgs.LogOff;
 import msgs.SocketMsg;
 
-public class Server extends Thread
+public class SyncServer extends Thread
 {
 	private ServerSocket    serverSocket;
-	private ServiceProvider provider = null;
+	private ServiceProvider  listener = null;
 
-	public Server(int port) throws IOException
+	public SyncServer(int port) throws IOException
 	{
 		serverSocket = new ServerSocket(port);
 		serverSocket.setSoTimeout(10000);
 	}
 
-	public void registerProvider(ServiceProvider sp) {
-		provider = sp;
+	public void setSocketListener(ServiceProvider sp) {
+		listener = sp;
 	}
 
-	public void unregisterProvider() {
-		provider = null;
+	public void resetSocketListener() {
+		listener = null;
 	}
 
 	private boolean processData(Socket _server) throws IOException {
@@ -44,11 +44,11 @@ public class Server extends Thread
 					return false;
 				}
 				
-				if(provider == null) {
+				if(listener == null) {
 					System.out.println(inMsg.toString());
 					write(out, inMsg);					
 				} else {
-					SocketMsg outMsg = provider.process(inMsg);
+					SocketMsg outMsg = listener.process(inMsg);
 					write(out, outMsg);					
 				}  
 			} else {
@@ -101,7 +101,6 @@ public class Server extends Thread
 				} 
 
 				while(processData(server)) {
-					// System.out.println("Thank you for using this service!");
 				}
 
 				server.close();

@@ -1,21 +1,21 @@
-#include <utils_jcppsocket/cpp/server_socket.h>
+#include <utils_jcppsocket/cpp/sync_server.h>
 
 using namespace utils_jcppsocket;
 using namespace io;
 
-ServerSocket::ServerSocket(const int port) :
+SyncServer::SyncServer(const int port) :
     server_port_(port),
     io_service_(new boost::asio::io_service),
     running_(false)
 {
 }
 
-ServerSocket::~ServerSocket()
+SyncServer::~SyncServer()
 {
     stopService();
 }
 
-bool ServerSocket::startService()
+bool SyncServer::startService()
 {
     if(running_) {
         std::cerr << "Warning: Service is already provided!" << std::endl;
@@ -31,11 +31,11 @@ bool ServerSocket::startService()
         running_ = false;
     }
 
-    th_ = boost::thread(boost::bind(&ServerSocket::run, this));
+    th_ = boost::thread(boost::bind(&SyncServer::run, this));
     running_ = true;
 }
 
-void ServerSocket::stopService()
+void SyncServer::stopService()
 {
     if(th_.interruption_requested())
         return;
@@ -46,12 +46,12 @@ void ServerSocket::stopService()
     running_ = false;
 }
 
-bool ServerSocket::isRunnning()
+bool SyncServer::isRunnning()
 {
     return running_;
 }
 
-bool ServerSocket::registerProvider(const ServiceProvider::Ptr &provider)
+bool SyncServer::registerProvider(const ServiceProvider::Ptr &provider)
 {
     if(!provider_) {
         provider_ = provider;
@@ -62,7 +62,7 @@ bool ServerSocket::registerProvider(const ServiceProvider::Ptr &provider)
     return false;
 }
 
-bool ServerSocket::unregisterProvider()
+bool SyncServer::unregisterProvider()
 {
     if(provider_) {
         provider_.reset();
@@ -73,7 +73,7 @@ bool ServerSocket::unregisterProvider()
     return false;
 }
 
-void ServerSocket::run()
+void SyncServer::run()
 {
     while(running_) {
         if(boost::this_thread::interruption_requested())

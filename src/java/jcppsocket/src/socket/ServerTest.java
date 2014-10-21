@@ -5,7 +5,7 @@ import java.io.IOException;
 import msgs.CharSeq;
 import msgs.SocketMsg;
 
-class Test {
+class ServerTest {
 	public static void main(String [] args) {
 		class StringProvider implements ServiceProvider {
 			@Override
@@ -24,8 +24,8 @@ class Test {
 		
 		try {
 			StringProvider strPr = new StringProvider();
-			Server s = new Server(6666);
-			s.registerProvider(strPr);
+			SyncServer s = new SyncServer(6666);
+			s.setSocketListener(strPr);
 			s.start();
 			
 		} catch(IOException e) {

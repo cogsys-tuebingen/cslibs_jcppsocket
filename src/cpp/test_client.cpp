@@ -1,5 +1,5 @@
 /// HEADER
-#include <utils_jcppsocket/cpp/socket.h>
+#include <utils_jcppsocket/cpp/sync_client.h>
 
 /// PROJECT
 #include <utils_jcppsocket/cpp/socket_msgs.h>
@@ -61,7 +61,7 @@ int main()
 
 
     /// --- test --- ////
-    SyncSocket              socket("localhost", 6666);
+    SyncClient              socket("localhost", 6666);
 
 
     SocketMsg::Ptr out = boost::dynamic_pointer_cast<SocketMsg>(seq);

@@ -25,12 +25,12 @@ add_library(utils_jcppsocket
     include/utils_jcppsocket/cpp/socket_msgs.hpp
     include/utils_jcppsocket/cpp/service_provider.hpp
     include/utils_jcppsocket/cpp/hash.hpp
-    include/utils_jcppsocket/cpp/socket.h
-    include/utils_jcppsocket/cpp/server_socket.h
+    include/utils_jcppsocket/cpp/sync_client.h
+    include/utils_jcppsocket/cpp/sync_server.h
 
-    src/cpp/socket.cpp
+    src/cpp/sync_client.cpp
+    src/cpp/sync_server.cpp
     src/cpp/socket_msgs.cpp
-    src/cpp/server_socket.cpp
 )
 
 target_link_libraries(utils_jcppsocket

@@ -6,12 +6,12 @@
 #include <boost/thread.hpp>
 
 namespace utils_jcppsocket {
-class ServerSocket {
+class SyncServer {
 public:
-    typedef boost::shared_ptr<ServerSocket> Ptr;
+    typedef boost::shared_ptr<SyncServer> Ptr;
 
-    ServerSocket(const int port);
-    virtual ~ServerSocket();
+    SyncServer(const int port);
+    virtual ~SyncServer();
 
     bool startService();
     void stopService();

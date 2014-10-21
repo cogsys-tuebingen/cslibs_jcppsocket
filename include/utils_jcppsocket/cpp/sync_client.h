@@ -4,16 +4,16 @@
 #include "io.hpp"
 
 namespace utils_jcppsocket {
-class SyncSocket
+class SyncClient
 {
 public:
-    typedef boost::shared_ptr<SyncSocket> Ptr;
+    typedef boost::shared_ptr<SyncClient> Ptr;
 
 
-    SyncSocket(const std::string &server,
+    SyncClient(const std::string &server,
                const int port);
 
-    virtual ~SyncSocket();
+    virtual ~SyncClient();
 
     bool connect();
 

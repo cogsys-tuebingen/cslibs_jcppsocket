@@ -1,5 +1,5 @@
 /// HEADER
-#include <utils_jcppsocket/cpp/socket.h>
+#include <utils_jcppsocket/cpp/sync_client.h>
 
 /// PROJECT
 #include <utils_jcppsocket/cpp/serialize.hpp>
@@ -7,7 +7,7 @@
 using namespace utils_jcppsocket;
 using namespace io;
 
-SyncSocket::SyncSocket(const std::string &server,
+SyncClient::SyncClient(const std::string &server,
                const int port) :
     server_name_(server),
     server_port_(port),
@@ -16,13 +16,13 @@ SyncSocket::SyncSocket(const std::string &server,
 {
 }
 
-SyncSocket::~SyncSocket()
+SyncClient::~SyncClient()
 {
     if(connected_)
         disconnect();
 }
 
-bool SyncSocket::connect()
+bool SyncClient::connect()
 {
     if(connected_) {
         std::cerr << "Warning: Socket is already connected!" << std::endl;
@@ -42,7 +42,7 @@ bool SyncSocket::connect()
     return connected_;
 }
 
-bool SyncSocket::disconnect()
+bool SyncClient::disconnect()
 {
     if(!connected_) {
         std::cerr << "Warning: Socket is not connected!" << std::endl;
@@ -61,7 +61,7 @@ bool SyncSocket::disconnect()
     return true;
 }
 
-bool SyncSocket::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
+bool SyncClient::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
 {
     if(!connected_) {
         std::cerr << "Error: Socket is not connected!" << std::endl;
@@ -82,7 +82,7 @@ bool SyncSocket::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
 
 }
 
-bool SyncSocket::isConnected() const
+bool SyncClient::isConnected() const
 {
     return connected_;
 }
