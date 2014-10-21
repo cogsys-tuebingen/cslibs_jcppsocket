@@ -1,6 +1,7 @@
 package msgs;
 
 
+
 public class DataType {
 	final static int LOGOFF_T	 = -3;
 	final static int ERROR_T     = -2;
@@ -19,6 +20,11 @@ public class DataType {
 	final static int SEQUENCE_DO =  1;
 	final static int BLOCK_DO	 =  2;
 	
+	private static boolean notYetAvailable(final int type) {
+		boolean nYA = type == UCHAR_T || type == UINT_T;
+		return nYA;
+	}
+	
 	public static SocketMsg getMessage(int type) {
 		switch (type) {
 		case INT_T:
@@ -29,9 +35,14 @@ public class DataType {
 			return new msgs.Double();
 		case ERROR_T:
 			return new msgs.Error();
+		case CHAR_T:
+			return new msgs.Char();
 		case LOGOFF_T:
 			return new msgs.LogOff();
 		default:
+			if(notYetAvailable(type))
+				return new msgs.Error("Not yet available data type!");
+			
 			return null;
 		}
 	}
@@ -44,7 +55,12 @@ public class DataType {
 			return new msgs.FloatSeq();
 		case DOUBLE_T:
 			return new msgs.DoubleSeq();
+		case CHAR_T:
+			return new msgs.CharSeq();
 		default:
+			if(notYetAvailable(type))
+				return new msgs.Error("Not yet available data type!");
+			
 			return null;
 		}
 	}	
@@ -57,7 +73,12 @@ public class DataType {
 			return new msgs.FloatBlock();
 		case DOUBLE_T:
 			return new msgs.DoubleBlock();
+		case CHAR_T:
+			return new msgs.CharBlock();
 		default:
+			if(notYetAvailable(type))
+				return new msgs.Error("Not yet available data type!");
+			
 			return null;
 		}
 	}

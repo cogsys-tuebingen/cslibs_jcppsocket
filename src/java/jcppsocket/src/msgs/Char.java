@@ -5,39 +5,39 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class Char extends SocketMsg {
-	private char value = 0;
+	private byte value = 0;
 
 	public Char() {
-		super.size    = 4;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.SINGLE_DO;
 	}
 
-	public Char(final char value) {
+	public Char(final byte value) {
 		this.value	  = value;
-		super.size    = 4;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.SINGLE_DO;
 	}
 
-	public Char(final char value, 
+	public Char(final byte value, 
 				 final long id) {
 		this.value         = value;
 		super.id      = id;
-		super.size    = 4;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.SINGLE_DO;
 
 	}
 
-	public Char(final char value, 
+	public Char(final byte value, 
 				 final long id, 
 				 final Hash hash) {
 		this.value         = value;
 		super.id      = id;
 		super.hash    = hash;
-		super.size    = 4;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.SINGLE_DO;
 
 	}
@@ -46,27 +46,27 @@ public class Char extends SocketMsg {
 			     final Hash hash) {
 		super.id      = id;
 		super.hash    = hash;
-		super.size    = 4;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.SINGLE_DO;
 	}
 
-	void set(final char value) {
+	void set(final byte value) {
 		this.value = value;
 	}
 
-	char get() {
+	byte get() {
 		return this.value;
 	}
 
 	public void serialize(DataOutputStream out) throws IOException {
 		super.serialize(out);
-		out.writeFloat(this.value);
+		out.writeByte(this.value);
 	}
 
 	public void deserialize(DataInputStream in) throws IOException {
 		super.deserialize(in);
-		this.value = in.readChar();
+		this.value = in.readByte();
 	}
 
 	public void deserialize(final long 		id, 
@@ -76,7 +76,7 @@ public class Char extends SocketMsg {
 							final int  		size, 
 							DataInputStream in) throws IOException {
 		super.deserialize(id, hash, type, dataOrg, size, in);
-		this.value = in.readChar();
+		this.value = in.readByte();
 	}
 
 	public String toString() {

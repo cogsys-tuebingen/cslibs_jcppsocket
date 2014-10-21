@@ -28,6 +28,7 @@ struct Serializer {
 
     void serialize(std::ostream &out) const {
         const int max_idx = sizeof(T) - 1;
+
         for(int i = 0 ; i < sizeof(T) ; ++i)
             out << bytes[max_idx - i];
     }

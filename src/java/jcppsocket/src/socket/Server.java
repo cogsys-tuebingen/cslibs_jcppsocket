@@ -18,17 +18,17 @@ public class Server extends Thread
 	private ServerSocket    serverSocket;
 	private ServiceProvider provider = null;
 
-	public Server(int _port) throws IOException
+	public Server(int port) throws IOException
 	{
-		serverSocket = new ServerSocket(_port);
+		serverSocket = new ServerSocket(port);
 		serverSocket.setSoTimeout(10000);
 	}
 
-	public void registerProcessor(ServiceProvider _sp) {
-		provider = _sp;
+	public void registerProvider(ServiceProvider sp) {
+		provider = sp;
 	}
 
-	public void deregisterProcessor() {
+	public void unregisterProvider() {
 		provider = null;
 	}
 

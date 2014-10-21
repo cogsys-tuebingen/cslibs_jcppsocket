@@ -101,14 +101,16 @@ inline void readIn(SocketMsg::Ptr               &data,
     serialization::Hash256             hash;
 
     magic_a.deserialize(header_buff);
+
+    if(magic_a.value != Magic_A)
+        throw std::logic_error("Wrong message initializer!");
+
     id.deserialize(header_buff);
     hash.deserialize(header_buff);
     type.deserialize(header_buff);
     data_org.deserialize(header_buff);
     size.deserialize(header_buff);
 
-    if(magic_a.value != Magic_A)
-        throw std::logic_error("Wrong message initializer!");
 
 
     boost::asio::streambuf data_stream;

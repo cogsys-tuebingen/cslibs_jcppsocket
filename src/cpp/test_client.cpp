@@ -131,30 +131,32 @@ int main()
     }
 
     /// ----------------------------------------------------------------------------------------------------
-//    std::cout << "--- string ---" << std::endl;
-//    std::string test_str("i test if i test when i test it!");
-//    VectorMsg<char>::Ptr str_msg(new VectorMsg<char>);
-//    str_msg->assign(test_str.data(), test_str.size());
+    std::cout << "--- string ---" << std::endl;
+    std::string test_str("i test if i test when i test it!");
+    VectorMsg<char>::Ptr str_msg(new VectorMsg<char>);
+    str_msg->assign(test_str.data(), test_str.size());
 
-//    start = boost::posix_time::microsec_clock::local_time();
-//    if(socket.query(out,in)) {
-//        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
-//        VectorMsg<char>::Ptr   dat = boost::dynamic_pointer_cast<VectorMsg<char> >(in);
+    out   = boost::dynamic_pointer_cast<SocketMsg>(str_msg);
+    start = boost::posix_time::microsec_clock::local_time();
 
-//        if(err.get() != NULL) {
-//            std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
-//        }
+    if(socket.query(out,in)) {
+        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
+        VectorMsg<char>::Ptr   dat = boost::dynamic_pointer_cast<VectorMsg<char> >(in);
 
-//        if(dat.get() != NULL) {
-//            boost::posix_time::time_duration dur = boost::posix_time::microsec_clock::local_time() - start;
-//            std::cout << "time retrieval: " << dur.total_nanoseconds() / 1000000.0 << "ms" << std::endl;
+        if(err.get() != NULL) {
+            std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
+        }
 
-//            std::string str;
-//            str.assign(dat->begin(), dat->end());
-//            std::cout << "[" << str << "]" << std::endl;
-//        }
+        if(dat.get() != NULL) {
+            boost::posix_time::time_duration dur = boost::posix_time::microsec_clock::local_time() - start;
+            std::cout << "time retrieval: " << dur.total_nanoseconds() / 1000000.0 << "ms" << std::endl;
 
-//    }
+            std::string str;
+            str.assign(dat->begin(), dat->end());
+            std::cout << "[" << str << "]" << std::endl;
+        }
+
+    }
 
     if(!socket.disconnect())
         std::cerr << "error disconnecting!" << std::endl;

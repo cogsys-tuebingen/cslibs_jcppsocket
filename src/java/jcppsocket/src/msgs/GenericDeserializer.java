@@ -24,9 +24,11 @@ public class GenericDeserializer {
 			msg = DataType.getBlockMessage(type);
 			break;		
 		}
-				
+			
 		if(msg != null)
 			msg.deserialize(id, hash, type, dataOrg, size, in);
+		else 
+			System.err.println("Decoding error!");
 		
 		return msg;
 	}

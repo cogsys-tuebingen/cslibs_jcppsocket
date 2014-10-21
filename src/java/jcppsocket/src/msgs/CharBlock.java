@@ -6,21 +6,21 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class CharBlock extends SocketMsg {
-	private char[] block = new char[0];
-	private int		 rows = 0;
-	private int 	 cols = 0;
+	private byte[] block = new byte[0];
+	private int	   rows = 0;
+	private int    cols = 0;
 
 	public CharBlock() {
-		super.size    = 8;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.BLOCK_DO;
 
 	}
 
 	public CharBlock(final long id) {
 		super.id      = id;
-		super.size    = 8;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.BLOCK_DO;
 	}
 
@@ -28,8 +28,8 @@ public class CharBlock extends SocketMsg {
 					  final Hash hash) {
 		super.id      = id;
 		super.hash    = hash;
-		super.size    = 8;
-		super.type    = DataType.FLOAT_T;
+		super.size    = 1;
+		super.type    = DataType.CHAR_T;
 		super.dataOrg = DataType.BLOCK_DO;
 	}
 
@@ -43,18 +43,18 @@ public class CharBlock extends SocketMsg {
 		return this.cols;
 	}
 	
-	public void set(final char[] block, 
+	public void set(final byte[] block, 
 					final int	  step) {
 		this.block 	   = block.clone();
 		this.cols       = step;
 		this.rows	   = block.length / step;
-		super.size = 4 * block.length + 8;
+		super.size = block.length + 1;
 	}
 	
-	public void set(final char[][] block) {
+	public void set(final byte[][] block) {
 		this.cols       = block[0].length;
 		this.rows	   = block.length;
-		super.size = 4 * this.rows * this.cols + 8;
+		super.size = this.rows * this.cols + 1;
 		for(int i = 0 ; i < this.rows ; ++i) {
 			for(int j = 0 ; j < this.cols ; ++j) {
 				this.block[i * this.cols + j] = block[i][j];
@@ -62,16 +62,16 @@ public class CharBlock extends SocketMsg {
 		}
 	}	
 	
-	public char[] get() {
+	public byte[] get() {
 		return block;
 	}
 	
-	public char[] row(final int i) {
+	public byte[] row(final int i) {
 		return Arrays.copyOfRange(block, i * this.cols, i * this.cols + this.cols);
 	}
 	
 	
-	public char get(final int y,
+	public byte get(final int y,
 					 final int x)
 	{
 		return block[y * this.cols + x];
@@ -81,8 +81,8 @@ public class CharBlock extends SocketMsg {
 		super.serialize(out);
 		out.writeInt(this.rows);
 		out.writeInt(this.cols);
-		for (char f : block) {
-			out.writeFloat(f);
+		for (byte b : block) {
+			out.writeByte(b);
 		}
 	}
 
@@ -108,9 +108,9 @@ public class CharBlock extends SocketMsg {
 	private void readSequence(DataInputStream in)
 			throws IOException {
 		int seqLength = (super.size - 2 * 4) / 4;
-		this.block = new char[seqLength];
+		this.block = new byte[seqLength];
 		for(int l = 0 ; l < seqLength ; ++l) {
-			this.block[l] = in.readChar();
+			this.block[l] = in.readByte();
 		}
 	}
 
