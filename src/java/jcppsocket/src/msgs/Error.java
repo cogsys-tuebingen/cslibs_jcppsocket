@@ -10,30 +10,30 @@ public class Error extends SocketMsg {
 		
 	public Error() {
 		super.size = 0;
-		super.type = DataType.error_t;
+		super.type = DataType.ERROR_T;
 	}
 	
-	public Error(final String _msg) {
-		msg	   	   = _msg;
-		super.type = DataType.error_t;
-		set(_msg);
+	public Error(final String msg) {
+		this.msg	   	   = msg;
+		super.type = DataType.ERROR_T;
+		set(msg);
 	}
 	
-	public Error(final String _msg, long _id) {
-		msg        = _msg;
+	public Error(final String msg, long _id) {
+		this.msg        = msg;
 		super.id   = _id;
-		super.size = _msg.length();
-		super.type = DataType.error_t;
+		super.size = msg.length();
+		super.type = DataType.ERROR_T;
 	}
 	
-	public Error(final String _msg, 
+	public Error(final String msg, 
 				 final long   _id, 
 				 final Hash   _hash) {
-		msg        = _msg;
+		this.msg        = msg;
 		super.id   = _id;
 		super.hash = _hash;
-		super.type = DataType.error_t;
-		set(_msg);
+		super.type = DataType.ERROR_T;
+		set(msg);
 	}
 	
 	public Error(final long _id, 
@@ -41,49 +41,49 @@ public class Error extends SocketMsg {
 		super.id   = _id;
 		super.hash = _hash;
 		super.size = 0;
-		super.type = DataType.error_t;
+		super.type = DataType.ERROR_T;
 	}
 	
-	void set(String _msg) {
-		msg 	   =  "Error : '" + _msg + "'";
-		super.size = msg.length();
+	void set(String msg) {
+		this.msg 	   =  "Error : '" + msg + "'";
+		super.size = this.msg.length();
 	}
 	
 	String get() {
-		return msg;
+		return this.msg;
 	}
 	
-	public void serialize(DataOutputStream _out) throws IOException {
-		super.serialize(_out);
-		_out.writeBytes(msg);
+	public void serialize(DataOutputStream out) throws IOException {
+		super.serialize(out);
+		out.writeBytes(this.msg);
 	}
 	
-	public void deserialize(DataInputStream _in) throws IOException {
-		super.deserialize(_in);
+	public void deserialize(DataInputStream in) throws IOException {
+		super.deserialize(in);
 		
-		readString(_in);
+		readString(in);
 	}
 
-	private void readString(DataInputStream _in) throws IOException {
+	private void readString(DataInputStream in) throws IOException {
 		ArrayList<Byte> buff = new ArrayList<Byte>();
 		for(int i = 0 ; i < size ; ++i) {
-			buff.add(_in.readByte());
+			buff.add(in.readByte());
 		}
 		
-		msg = String.valueOf(buff.toArray());
+		this.msg = String.valueOf(buff.toArray());
 	}
 	
-	public void deserialize(final long 		_id, 
-							final Hash 		_hash, 
-						    final int  		_type,
-						    final int  		_dataOrg,
-						    final int  		_size, 
-						    DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
-		readString(_in);
+	public void deserialize(final long 		id, 
+							final Hash 		hash, 
+						    final int  		type,
+						    final int  		dataOrg,
+						    final int  		size, 
+						    DataInputStream in) throws IOException {
+		super.deserialize(id, hash, type, dataOrg, size, in);
+		readString(in);
 	}
 	
 	public String toString() {
-		return super.toString() + " [ " + msg + "]";
+		return super.toString() + " [ " + this.msg + "]";
 	}
 }

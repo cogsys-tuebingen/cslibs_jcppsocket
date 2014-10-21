@@ -9,89 +9,89 @@ public class DoubleSeq extends SocketMsg {
 
 	public DoubleSeq() {
 		super.size    = 0;
-		super.type    = DataType.double_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.DOUBLE_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 
-	public DoubleSeq(final double[] _seq) {
-		seq 		  = _seq.clone();
+	public DoubleSeq(final double[] seq) {
+		this.seq 	  = seq.clone();
 		super.size    = 8 * seq.length;
-		super.type 	  = DataType.double_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type 	  = DataType.DOUBLE_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 
-	public DoubleSeq(final double[] _seq, 
-				     final long 	_id) {
-		seq 		  = _seq.clone();
-		super.id 	  = _id;
+	public DoubleSeq(final double[] seq, 
+				     final long 	id) {
+		this.seq 	  = seq.clone();
+		super.id 	  = id;
 		super.size	  = 8 * seq.length;
-		super.type 	  = DataType.double_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type 	  = DataType.DOUBLE_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public DoubleSeq(final double[] _seq, 
-					 final long 	_id, 
-					 final Hash 	_hash) {
-		seq 		  = _seq.clone();
-		super.id	  = _id;
-		super.hash    = _hash;
+	public DoubleSeq(final double[] seq, 
+					 final long 	id, 
+					 final Hash 	hash) {
+		this.seq 	  = seq.clone();
+		super.id	  = id;
+		super.hash    = hash;
 		super.size    = 8 * seq.length;
-		super.type    = DataType.double_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.DOUBLE_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}	
 
-	public DoubleSeq(final long _id, 
-					 final Hash _hash) {
-		super.id      = _id;
-		super.hash    = _hash;
+	public DoubleSeq(final long id, 
+					 final Hash hash) {
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 0;
-		super.type    = DataType.double_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.DOUBLE_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 
-	public void set(final double[] _seq) {
-		seq 	   = _seq.clone();
-		super.size = 8 * _seq.length;
+	public void set(final double[] seq) {
+		this.seq   = seq.clone();
+		super.size = 8 * seq.length;
 	}
 
 	public double[] get() {
 		return seq;
 	}
 
-	public void serialize(DataOutputStream _out) throws IOException {
-		super.serialize(_out);
+	public void serialize(DataOutputStream out) throws IOException {
+		super.serialize(out);
 		for (double f : seq) {
-			_out.writeDouble(f);
+			out.writeDouble(f);
 		}
 	}
 
-	public void deserialize(DataInputStream _in) throws IOException {
-		super.deserialize(_in);
-		readSequence(_in);
+	public void deserialize(DataInputStream in) throws IOException {
+		super.deserialize(in);
+		readSequence(in);
 	}
 
-	public void deserialize(final long 		_id, 
-							final Hash 		_hash, 
-							final int  		_type,
-							final int 		_dataOrg,
-							final int		_size, 
-							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
-		readSequence(_in);
+	public void deserialize(final long 		id, 
+							final Hash 		hash, 
+							final int  		type,
+							final int 		dataOrg,
+							final int		size, 
+							DataInputStream in) throws IOException {
+		super.deserialize(id, hash, type, dataOrg, size, in);
+		readSequence(in);
 	}
 
-	private void readSequence(DataInputStream _in)
+	private void readSequence(DataInputStream in)
 			throws IOException {
 		int seqLength = super.size / 8;
 		seq = new double[seqLength];  //new ArrayList<java.lang.Double>();
 		for(int l = 0 ; l < seqLength ; ++l) {
-			seq[l] = _in.readDouble();
+			seq[l] = in.readDouble();
 		}
 	}
 
 	public String toString() {
 		String buff = super.toString() + " [ ";
-		for(double d : seq) {
+		for(double d : this.seq) {
 			buff += d + " ";
 		}
 		buff += "]";

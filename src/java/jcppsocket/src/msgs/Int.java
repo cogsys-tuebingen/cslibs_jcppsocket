@@ -9,76 +9,76 @@ public class Int extends SocketMsg {
 		
 	public Int() {
 		super.size = 4;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	public Int(final int _value) {
-		value         = _value;
+	public Int(final int value) {
+		this.value         = value;
 		super.size    = 4;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	public Int(final int  _value, 
-			   final long _id) {
-		value         = _value;
-		super.id      = _id;
+	public Int(final int  value, 
+			   final long id) {
+		this.value         = value;
+		super.id      = id;
 		super.size    = 4;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	public Int(final int  _value, 
-			   final long _id, 
-			   final Hash _hash) {
-		value         = _value;
-		super.id      = _id;
-		super.hash    = _hash;
+	public Int(final int  value, 
+			   final long id, 
+			   final Hash hash) {
+		this.value         = value;
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 4;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	public Int(final long _id, 
-			   final Hash _hash) {
-		super.id      = _id;
-		super.hash    = _hash;
+	public Int(final long id, 
+			   final Hash hash) {
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 4;
-		super.type    = DataType.int_t;		
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.INT_T;		
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	void set(final int _value) {
-		value = _value;
+	void set(final int value) {
+		this.value = value;
 	}
 	
 	int get() {
-		return value;
+		return this.value;
 	}
 	
-	public void serialize(DataOutputStream _out) throws IOException {
-		super.serialize(_out);
-		_out.writeInt(value);
+	public void serialize(DataOutputStream out) throws IOException {
+		super.serialize(out);
+		out.writeInt(this.value);
 	}
 	
-	public void deserialize(DataInputStream _in) throws IOException {
-		super.deserialize(_in);
-		value = _in.readInt();
+	public void deserialize(DataInputStream in) throws IOException {
+		super.deserialize(in);
+		this.value = in.readInt();
 	}
 	
-	public void deserialize(final long 		_id, 
-							final Hash 		_hash, 
-							final int  		_type,
-							final int 		_dataOrg,
-							final int  		_size, 
-							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
-		value = _in.readInt();
-		System.out.println(value);
+	public void deserialize(final long 		id, 
+							final Hash 		hash, 
+							final int  		type,
+							final int 		dataOrg,
+							final int  		size, 
+							DataInputStream in) throws IOException {
+		super.deserialize(id, hash, type, dataOrg, size, in);
+		this.value = in.readInt();
+		System.out.println(this.value);
 	}
 	
 	public String toString() {
-		return super.toString() + " [ " + value + " ]";
+		return super.toString() + " [ " + this.value + " ]";
 	}
 }

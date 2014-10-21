@@ -9,34 +9,34 @@ public class FloatSeq extends SocketMsg {
 		
 	public FloatSeq() {
 		super.size = 0;
-		super.type = DataType.float_t;
+		super.type = DataType.FLOAT_T;
 	}
 	
 	public FloatSeq(final float[] _seq) {
-		seq 		  = _seq.clone();
-		super.size    = 4 * seq.length;
-		super.type    = DataType.float_t;
-		super.dataOrg = DataType.sequence_do;
+		this.seq 		  = _seq.clone();
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.FLOAT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
 	public FloatSeq(final float[] _seq, 
 					final long    _id) {
-		seq           = _seq.clone();
+		this.seq           = _seq.clone();
 		super.id      = _id;
-		super.size    = 4 * seq.length;
-		super.type    = DataType.float_t;
-		super.dataOrg = DataType.sequence_do;
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.FLOAT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
 	public FloatSeq(final float[] _seq, 
 					final long 	  _id, 
 					final Hash    _hash) {
-		seq           = _seq.clone();
+		this.seq           = _seq.clone();
 		super.id      = _id;
 		super.hash    = _hash;
-		super.size    = 4 * seq.length;
-		super.type    = DataType.float_t;
-		super.dataOrg = DataType.sequence_do;
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.FLOAT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
 	public FloatSeq(final long _id, 
@@ -44,22 +44,22 @@ public class FloatSeq extends SocketMsg {
 		super.id      = _id;
 		super.hash    = _hash;
 		super.size    = 0;
-		super.type    = DataType.float_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.FLOAT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
 	void set(final float[]_seq) {
-		seq 	   = _seq.clone();
+		this.seq 	   = _seq.clone();
 		super.size = 4 * _seq.length;
 	}
 	
 	float[] get() {
-		return seq;
+		return this.seq;
 	}
 	
 	public void serialize(DataOutputStream _out) throws IOException {
 		super.serialize(_out);
-		for (float f : seq) {
+		for (float f : this.seq) {
 			_out.writeFloat(f);
 		}
 	}
@@ -82,15 +82,15 @@ public class FloatSeq extends SocketMsg {
 	private void readSequence(DataInputStream _in)
 			throws IOException {
 		int seqLength = super.size / 4;
-		seq = new float[seqLength];  //new ArrayList<java.lang.Double>();
+		this.seq = new float[seqLength];  //new ArrayList<java.lang.Double>();
 		for(int l = 0 ; l < seqLength ; ++l) {
-			seq[l] = _in.readFloat();
+			this.seq[l] = _in.readFloat();
 		}
 	}
 	
 	public String toString() {
 		String buff = super.toString() + " [ ";
-		for(float f : seq) {
+		for(float f : this.seq) {
 			buff += f + " ";
 		}
 		buff += "]";

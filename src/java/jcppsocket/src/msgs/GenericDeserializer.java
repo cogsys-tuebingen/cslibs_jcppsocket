@@ -4,29 +4,29 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class GenericDeserializer {
-	public static SocketMsg deserialize(DataInputStream _in) throws IOException {
-		long id   	 = _in.readLong();
+	public static SocketMsg deserialize(DataInputStream in) throws IOException {
+		long id   	 = in.readLong();
 		Hash hash    = new Hash(256); 
-		hash.deserialize(_in);
-		int  type 	 = _in.readInt();
-		int	 dataOrg = _in.readInt();
-		int  size 	 = _in.readInt();
+		hash.deserialize(in);
+		int  type 	 = in.readInt();
+		int	 dataOrg = in.readInt();
+		int  size 	 = in.readInt();
 		
 		SocketMsg msg = null;
 		switch(dataOrg) {
-		case DataType.single_do:
+		case DataType.SINGLE_DO:
 			msg = DataType.getMessage(type);
 			break;
-		case DataType.sequence_do:
+		case DataType.SEQUENCE_DO:
 			msg = DataType.getSeqMessage(type);
 			break;
-		case DataType.block_do:
+		case DataType.BLOCK_DO:
 			msg = DataType.getBlockMessage(type);
 			break;		
 		}
 				
 		if(msg != null)
-			msg.deserialize(id, hash, type, dataOrg, size, _in);
+			msg.deserialize(id, hash, type, dataOrg, size, in);
 		
 		return msg;
 	}

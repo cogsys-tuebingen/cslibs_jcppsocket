@@ -5,8 +5,8 @@ public class LogOff extends SocketMsg {
 		
 	public LogOff() {
 		super.size    = 0;
-		super.type    = DataType.logoff_t;		
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.LOGOFF_T;		
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
 	public LogOff(final long _id, 
@@ -14,8 +14,8 @@ public class LogOff extends SocketMsg {
 		super.id      = _id;
 		super.hash    = _hash;
 		super.size    = 0;
-		super.type    = DataType.logoff_t;		
-		super.dataOrg = DataType.single_do;
+		super.type    = DataType.LOGOFF_T;		
+		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
 	public String toString() {

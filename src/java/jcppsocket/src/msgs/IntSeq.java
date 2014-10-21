@@ -9,90 +9,90 @@ public class IntSeq extends SocketMsg {
 		
 	public IntSeq() {
 		super.size    = 0;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public IntSeq(final int[] _seq) {
-		seq           = _seq.clone();
-		super.size    = 4 * seq.length;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.sequence_do;
+	public IntSeq(final int[] seq) {
+		this.seq           = seq.clone();
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public IntSeq(final int[] _seq, 
-				  final long  _id) {
-		seq = _seq.clone();
-		super.id      = _id;
-		super.size    = 4 * seq.length;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.sequence_do;
+	public IntSeq(final int[] seq, 
+				  final long  id) {
+		this.seq = seq.clone();
+		super.id      = id;
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public IntSeq(final int[] _seq, 
-				  final long  _id, 
-				  final Hash  _hash) {
-		seq 		  = _seq.clone();
-		super.id      = _id;
-		super.hash    = _hash;
-		super.size    = 4 * seq.length;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.sequence_do;
+	public IntSeq(final int[] seq, 
+				  final long  id, 
+				  final Hash  hash) {
+		this.seq      = seq.clone();
+		super.id      = id;
+		super.hash    = hash;
+		super.size    = 4 * this.seq.length;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public IntSeq(final long _id, 
-				  final Hash _hash) {
-		super.id      = _id;
-		super.hash    = _hash;
+	public IntSeq(final long id, 
+				  final Hash hash) {
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 0;
-		super.type    = DataType.int_t;
-		super.dataOrg = DataType.sequence_do;
+		super.type    = DataType.INT_T;
+		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	void set(final int[] _seq) {
-		seq 	   = _seq.clone();
-		super.size = 4 * _seq.length;
+	void set(final int[] seq) {
+		this.seq 	   = seq.clone();
+		super.size = 4 * seq.length;
 	}
 	
 	int[] get() {
-		return seq;
+		return this.seq;
 	}
 	
-	public void serialize(DataOutputStream _out) throws IOException {
-		super.serialize(_out);
-		for (int i : seq) {
-			_out.writeInt(i);
+	public void serialize(DataOutputStream out) throws IOException {
+		super.serialize(out);
+		for (int i : this.seq) {
+			out.writeInt(i);
 		}
 	}
 	
-	public void deserialize(DataInputStream _in) throws IOException {
-		super.deserialize(_in);
-		readSequence(_in);
+	public void deserialize(DataInputStream in) throws IOException {
+		super.deserialize(in);
+		readSequence(in);
 	}
 	
-	public void deserialize(final long 		_id, 
-							final Hash 		_hash, 
-							final int  		_type,
-							final int		_dataOrg,
-							final int 	 	_size, 
-							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
-		readSequence(_in);
+	public void deserialize(final long 		id, 
+							final Hash 		hash, 
+							final int  		type,
+							final int		dataOrg,
+							final int 	 	size, 
+							DataInputStream in) throws IOException {
+		super.deserialize(id, hash, type, dataOrg, size, in);
+		readSequence(in);
 	}
 
-	private void readSequence(DataInputStream _in)
+	private void readSequence(DataInputStream in)
 			throws IOException {
 		int seqLength = super.size / 4;
-		seq = new int[seqLength];  //new ArrayList<java.lang.Double>();
+		this.seq = new int[seqLength];  //new ArrayList<java.lang.Double>();
 		for(int l = 0 ; l < seqLength ; ++l) {
-			seq[l] = _in.readInt();
+			this.seq[l] = in.readInt();
 		}
 	}
 	
 	
 	public String toString() {
 		String buff = super.toString() + " [ ";
-		for(int i : seq) {
+		for(int i : this.seq) {
 			buff += i + " ";
 		}
 		buff += "]";
