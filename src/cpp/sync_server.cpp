@@ -31,12 +31,19 @@ bool SyncServer::startService()
         running_ = false;
     }
 
-    th_ = boost::thread(boost::bind(&SyncServer::run, this));
+#define THREAD_LESS 0
+#if THREAD_LESS
+        running_ = true;
+        run();
+#else
     running_ = true;
+    th_ = boost::thread(boost::bind(&SyncServer::run, this));
+#endif
 }
 
 void SyncServer::stopService()
 {
+
     if(th_.interruption_requested())
         return;
 
@@ -76,6 +83,7 @@ bool SyncServer::unregisterProvider()
 void SyncServer::run()
 {
     while(running_) {
+
         if(boost::this_thread::interruption_requested())
             break;
 
@@ -89,6 +97,8 @@ void SyncServer::run()
             continue;
         }
 
+
+        std::cout << "Session is active!" << std::endl;
         bool session_active = true;
         while(session_active) {
             if(boost::this_thread::interruption_requested())

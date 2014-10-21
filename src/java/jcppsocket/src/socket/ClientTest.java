@@ -7,7 +7,7 @@ import msgs.SocketMsg;
 
 class ClientTest {
 	public static void main(String [] args) {
-		SyncClient sc = new SyncClient("localhost", 6666);
+		SyncClient sc = new SyncClient("127.0.0.1", 6666);
 		
 		String testStr 	= "I test if i decide to test!";
 		CharSeq seq 	= new CharSeq();
