@@ -114,10 +114,26 @@ public:
 
 
     void resize(const unsigned int n);
+
     T&   at(const unsigned int i);
+
     void push_back(const T &value);
+
     void clear();
+
     void assign(const std::vector<T> &data);
+
+    void assign(const typename std::vector<T>::iterator &begin,
+                const typename std::vector<T>::iterator &end);
+
+    void assign(const T* ptr, const int size);
+
+    typename std::vector<T>::const_iterator
+    begin() const;
+
+    typename std::vector<T>::const_iterator
+    end() const;
+
     unsigned int size() const;
 
 protected:
@@ -154,6 +170,7 @@ protected:
     unsigned int   rows_;
 };
 //// ----------------------------------------------------------
+
 }
 
 #endif // SOCKET_MSGS_H

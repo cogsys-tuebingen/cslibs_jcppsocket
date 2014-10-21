@@ -338,6 +338,35 @@ void VectorMsg<T>::assign(const std::vector<T> &data)
 }
 
 template<typename T>
+void VectorMsg<T>::assign(const typename std::vector<T>::iterator &begin,
+                          const typename std::vector<T>::iterator &end)
+{
+    data_.assign(begin, end);
+    size_ = data_.size() * serialization::TypeID<T>::size;
+}
+
+template<typename T>
+void VectorMsg<T>::assign(const T *ptr, const int size)
+{
+    data_.assign(ptr, ptr + size);
+    size_ = size;
+}
+
+template<typename T>
+typename std::vector<T>::const_iterator
+VectorMsg<T>::begin() const
+{
+    return data_.begin();
+}
+
+template<typename T>
+typename std::vector<T>::const_iterator
+VectorMsg<T>::end() const
+{
+    return data_.end();
+}
+
+template<typename T>
 unsigned int VectorMsg<T>::size() const
 {
     return data_.size();

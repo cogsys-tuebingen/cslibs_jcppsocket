@@ -16,7 +16,7 @@ import msgs.SocketMsg;
 public class Server extends Thread
 {
 	private ServerSocket    serverSocket;
-	private ServiceProvider processor = null;
+	private ServiceProvider provider = null;
 
 	public Server(int _port) throws IOException
 	{
@@ -25,11 +25,11 @@ public class Server extends Thread
 	}
 
 	public void registerProcessor(ServiceProvider _sp) {
-		processor = _sp;
+		provider = _sp;
 	}
 
 	public void deregisterProcessor() {
-		processor = null;
+		provider = null;
 	}
 
 	private boolean processData(Socket _server) throws IOException {
@@ -44,11 +44,11 @@ public class Server extends Thread
 					return false;
 				}
 				
-				if(processor == null) {
+				if(provider == null) {
 					System.out.println(inMsg.toString());
 					write(out, inMsg);					
 				} else {
-					SocketMsg outMsg = processor.process(inMsg);
+					SocketMsg outMsg = provider.process(inMsg);
 					write(out, outMsg);					
 				}  
 			} else {

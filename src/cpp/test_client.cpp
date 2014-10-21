@@ -74,6 +74,7 @@ int main()
         return 1;
     }
 
+    /// ----------------------------------------------------------------------------------------------------
     std::cout << "--- sequence ---" << std::endl;
     boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
     if(socket.query(out,in)) {
@@ -97,6 +98,7 @@ int main()
 
     }
 
+    /// ----------------------------------------------------------------------------------------------------
     std::cout << "--- block ---" << std::endl;
 
     out   = boost::dynamic_pointer_cast<SocketMsg>(block);
@@ -124,6 +126,32 @@ int main()
                 std::cout << "]";
             }
             std::cout << "] " << std::endl;
+        }
+
+    }
+
+    /// ----------------------------------------------------------------------------------------------------
+    std::cout << "--- string ---" << std::endl;
+    std::string test_str("i test if i test when i test it!");
+    VectorMsg<char>::Ptr str_msg(new VectorMsg<char>);
+    str_msg->assign(test_str.data(), test_str.size());
+
+    start = boost::posix_time::microsec_clock::local_time();
+    if(socket.query(out,in)) {
+        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
+        VectorMsg<char>::Ptr   dat = boost::dynamic_pointer_cast<VectorMsg<char> >(in);
+
+        if(err.get() != NULL) {
+            std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
+        }
+
+        if(dat.get() != NULL) {
+            boost::posix_time::time_duration dur = boost::posix_time::microsec_clock::local_time() - start;
+            std::cout << "time retrieval: " << dur.total_nanoseconds() / 1000000.0 << "ms" << std::endl;
+
+            std::string str;
+            str.assign(dat->begin(), dat->end());
+            std::cout << "[" << str << "]" << std::endl;
         }
 
     }
