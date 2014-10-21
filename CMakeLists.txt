@@ -25,6 +25,7 @@ add_library(utils_jcppsocket
     include/utils_jcppsocket/cpp/socket_msgs.hpp
     include/utils_jcppsocket/cpp/service_provider.hpp
     include/utils_jcppsocket/cpp/hash.hpp
+    include/utils_jcppsocket/cpp/socket_msgs.h
     include/utils_jcppsocket/cpp/sync_client.h
     include/utils_jcppsocket/cpp/sync_server.h
 

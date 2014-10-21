@@ -64,7 +64,6 @@ int main()
     SyncClient              socket("localhost", 6666);
 
 
-    SocketMsg::Ptr out = boost::dynamic_pointer_cast<SocketMsg>(seq);
     SocketMsg::Ptr in;
 
     if(socket.connect()) {
@@ -77,7 +76,7 @@ int main()
     /// ----------------------------------------------------------------------------------------------------
     std::cout << "--- sequence ---" << std::endl;
     boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
-    if(socket.query(out,in)) {
+    if(socket.query(seq,in)) {
         ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
         VectorMsg<double>::Ptr dat = boost::dynamic_pointer_cast<VectorMsg<double> >(in);
 
@@ -101,10 +100,9 @@ int main()
     /// ----------------------------------------------------------------------------------------------------
     std::cout << "--- block ---" << std::endl;
 
-    out   = boost::dynamic_pointer_cast<SocketMsg>(block);
     start = boost::posix_time::microsec_clock::local_time();
 
-    if(socket.query(out,in)) {
+    if(socket.query(block,in)) {
         ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
         BlockMsg<double>::Ptr  dat = boost::dynamic_pointer_cast<BlockMsg<double> >(in);
 
@@ -136,10 +134,9 @@ int main()
     VectorMsg<char>::Ptr str_msg(new VectorMsg<char>);
     str_msg->assign(test_str.data(), test_str.size());
 
-    out   = boost::dynamic_pointer_cast<SocketMsg>(str_msg);
     start = boost::posix_time::microsec_clock::local_time();
 
-    if(socket.query(out,in)) {
+    if(socket.query(str_msg,in)) {
         ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
         VectorMsg<char>::Ptr   dat = boost::dynamic_pointer_cast<VectorMsg<char> >(in);
 

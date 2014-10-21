@@ -32,9 +32,9 @@ public class SyncServer extends Thread
 		listener = null;
 	}
 
-	private boolean processData(Socket _server) throws IOException {
-		DataInputStream  in  = new DataInputStream(_server.getInputStream());
-		DataOutputStream out = new DataOutputStream(_server.getOutputStream());
+	private boolean processData(Socket socket) throws IOException {
+		DataInputStream  in  = new DataInputStream(socket.getInputStream());
+		DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
 		try {
 			SocketMsg inMsg = read(in);

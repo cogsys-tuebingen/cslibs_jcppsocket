@@ -9,7 +9,6 @@ class SyncClient
 public:
     typedef boost::shared_ptr<SyncClient> Ptr;
 
-
     SyncClient(const std::string &server,
                const int port);
 
@@ -20,6 +19,13 @@ public:
     bool disconnect();
 
     bool query(SocketMsg::Ptr &request, SocketMsg::Ptr &response);
+
+    template<typename T>
+    inline bool query(boost::shared_ptr<T> &request, SocketMsg::Ptr &response)
+    {
+        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(request);
+        return query(ptr, response);
+    }
 
     bool isConnected() const;
 
