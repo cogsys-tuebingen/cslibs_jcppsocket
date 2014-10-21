@@ -12,79 +12,79 @@ public class FloatSeq extends SocketMsg {
 		super.type = DataType.FLOAT_T;
 	}
 	
-	public FloatSeq(final float[] _seq) {
-		this.seq 		  = _seq.clone();
+	public FloatSeq(final float[] seq) {
+		this.seq 	  = seq.clone();
 		super.size    = 4 * this.seq.length;
 		super.type    = DataType.FLOAT_T;
 		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public FloatSeq(final float[] _seq, 
-					final long    _id) {
-		this.seq           = _seq.clone();
-		super.id      = _id;
+	public FloatSeq(final float[] seq, 
+					final long    id) {
+		this.seq      = seq.clone();
+		super.id      = id;
 		super.size    = 4 * this.seq.length;
 		super.type    = DataType.FLOAT_T;
 		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public FloatSeq(final float[] _seq, 
-					final long 	  _id, 
-					final Hash    _hash) {
-		this.seq           = _seq.clone();
-		super.id      = _id;
-		super.hash    = _hash;
+	public FloatSeq(final float[] seq, 
+					final long 	  id, 
+					final Hash    hash) {
+		this.seq      = seq.clone();
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 4 * this.seq.length;
 		super.type    = DataType.FLOAT_T;
 		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	public FloatSeq(final long _id, 
-					final Hash _hash) {
-		super.id      = _id;
-		super.hash    = _hash;
+	public FloatSeq(final long id, 
+					final Hash hash) {
+		super.id      = id;
+		super.hash    = hash;
 		super.size    = 0;
 		super.type    = DataType.FLOAT_T;
 		super.dataOrg = DataType.SEQUENCE_DO;
 	}
 	
-	void set(final float[]_seq) {
-		this.seq 	   = _seq.clone();
-		super.size = 4 * _seq.length;
+	void set(final float[]seq) {
+		this.seq   = seq.clone();
+		super.size = 4 * seq.length;
 	}
 	
 	float[] get() {
 		return this.seq;
 	}
 	
-	public void serialize(DataOutputStream _out) throws IOException {
-		super.serialize(_out);
+	public void serialize(DataOutputStream out) throws IOException {
+		super.serialize(out);
 		for (float f : this.seq) {
-			_out.writeFloat(f);
+			out.writeFloat(f);
 		}
 	}
 	
-	public void deserialize(DataInputStream _in) throws IOException {
-		super.deserialize(_in);
-		readSequence(_in);
+	public void deserialize(DataInputStream in) throws IOException {
+		super.deserialize(in);
+		readSequence(in);
 	}
 
-	public void deserialize(final long 		_id, 
-							final Hash 		_hash, 
-							final int  		_type,
-							final int 		_dataOrg,
-							final int  		_size, 
-							DataInputStream _in) throws IOException {
-		super.deserialize(_id, _hash, _type, _dataOrg, _size, _in);
-		readSequence(_in);
+	public void deserialize(final long 		id, 
+							final Hash 		hash, 
+							final int  		type,
+							final int 		dataOrg,
+							final int  		size, 
+							DataInputStream in) throws IOException {
+		super.deserialize(id, hash, type, dataOrg, size, in);
+		readSequence(in);
 	}
 	
-	private void readSequence(DataInputStream _in)
+	private void readSequence(DataInputStream in)
 			throws IOException {
 		int seqLength = super.size / 4;
 		this.seq = new float[seqLength];  //new ArrayList<java.lang.Double>();
 		for(int l = 0 ; l < seqLength ; ++l) {
-			this.seq[l] = _in.readFloat();
+			this.seq[l] = in.readFloat();
 		}
 	}
 	

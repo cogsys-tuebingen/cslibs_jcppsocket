@@ -51,7 +51,7 @@ public class FloatBlock extends SocketMsg {
 		super.size = 4 * block.length + 8;
 	}
 	
-	public void set(final int[][] block) {
+	public void set(final float[][] block) {
 		this.cols       = block[0].length;
 		this.rows	   = block.length;
 		super.size = 4 * this.rows * this.cols + 8;
