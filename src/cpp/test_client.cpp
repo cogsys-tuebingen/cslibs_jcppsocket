@@ -7,10 +7,25 @@
 /// SYSTEM
 #include <iostream>
 #include <boost/assign.hpp>
+#include <boost/thread.hpp>
 
 using namespace std;
 using namespace utils_jcppsocket;
 using namespace serialization;
+
+struct Poller {
+    void run() {
+        boost::thread t(boost::bind(&Poller::doRun, this));
+    }
+
+    void doRun() {
+        SyncClient socket("localhost", 6666);
+        socket.connect();
+        while(true) {
+            SocketMsg::Ptr in;
+        }
+    }
+};
 
 int main()
 {
@@ -157,6 +172,15 @@ int main()
 
     if(!socket.disconnect())
         std::cerr << "error disconnecting!" << std::endl;
+
+    for(int i = 0 ; i < 10; ++i) {
+        Poller p;
+        p.run();
+    }
+
+    while(true)
+        sleep(1);
+
 
     return 0;
 }
