@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import msgs.Error;
 import msgs.GenericDeserializer;
 import msgs.LogOff;
 import msgs.SocketMsg;
@@ -14,7 +13,7 @@ import msgs.SocketMsg;
 public class SyncClient {
 	private String serverName;
 	private int    serverPort;
-	private Socket socket = null;
+	private Session session = null;
 
 	public SyncClient(final String serverName, 
 					  final int	   serverPort) {
@@ -23,9 +22,10 @@ public class SyncClient {
 	}
 
 	public boolean connect() {
-		if(socket == null) {
+		if(session == null) {
 			try {
-				socket = new Socket(serverName, serverPort);
+				Socket socket = new Socket(serverName, serverPort);
+				session = new Session(socket, 42, 23);
 			} catch (UnknownHostException e) {
 				return false;
 			} catch (IOException e) {
@@ -37,67 +37,39 @@ public class SyncClient {
 	}
 
 	public boolean disconnect() {
-		if(socket == null) {
+		if(session == null) {
 			return false;
 		}
 		
 		try {
-			DataOutputStream outStr = new DataOutputStream(socket.getOutputStream());
-			write(outStr, new LogOff());
-			socket.close();
+			session.write(new LogOff());
+			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			socket = null;
+			session = null;
 			return false;
 		}
-		
-		socket = null;
+		session = null;
 		return true;
 	}
 
 	public SocketMsg query(SocketMsg out) {
-		if(socket == null || !socket.isConnected()) {
+		if(session == null) {
 			return new msgs.Error("Socket not connected!");
 		}
 		
 		try {
-			DataInputStream  inStr  = new DataInputStream(socket.getInputStream());
-			DataOutputStream outStr = new DataOutputStream(socket.getOutputStream());
-			
-			write(outStr, out);
-			return read(inStr);
-			
-		} catch (IOException e) {
+			return session.query(out);
+				} catch (IOException e) {
 			return new msgs.Error(e.toString());
 		}
 	}
 
 	public boolean isConnected() {
-		if(socket == null) {
+		if(session == null) {
 			return false;
 		}
 
-		return this.socket.isConnected();
-	}
-	
-	private void write(DataOutputStream out, SocketMsg outMsg)
-			throws IOException {
-		out.writeInt(23);
-		outMsg.serialize(out);
-		out.writeInt(42);
-	}
-	
-	private SocketMsg read(DataInputStream in) throws IOException {
-		int init = in.readInt();
-		if(init != 42)
-			throw new IOException("Wrong message initializer " + init + " !");
-
-		SocketMsg inMsg = GenericDeserializer.deserialize(in);
-
-		int exit = in.readInt();
-		if(exit != 23) 
-			throw new IOException("Wrong message terminator " + exit + " !");
-		
-		return inMsg;
+		return true;
 	}
 }

@@ -11,26 +11,35 @@ import msgs.LogOff;
 import msgs.SocketMsg;
 
 public class Session {
-	private Socket 			 connection = null;
+	private Socket 			 session = null;
 	private DataInputStream  iStream 	= null;
 	private DataOutputStream oStream 	= null;
+	private int				 magicA		= 23;
+	private int				 magicB		= 42;
 
-	public Session(Socket connection) throws IOException {
-		this.connection = connection;
-		this.iStream    = new DataInputStream(this.connection.getInputStream());
-		this.oStream	= new DataOutputStream(this.connection.getOutputStream());
+	public Session(Socket session) throws IOException {
+		this.session = session;
+		this.iStream    = new DataInputStream(this.session.getInputStream());
+		this.oStream	= new DataOutputStream(this.session.getOutputStream());
+	}
+	
+	public Session(Socket session, final int magicA, final int magicB) 
+		throws IOException {
+		this.session = session;
+		this.magicA  = magicA;
+		this.magicB  = magicB;
 	}
 
 	public SocketMsg read() throws IOException {
 		try {
 			int init = iStream.readInt();
-			if(init != 23)
+			if(init != magicA)
 				throw new IOException("Wrong message initializer " + init + " !");
 
 			SocketMsg inMsg = GenericDeserializer.deserialize(iStream);
 
 			int exit = iStream.readInt();
-			if(exit != 42) 
+			if(exit != magicB) 
 				throw new IOException("Wrong message terminator " + exit + " !");
 			return inMsg;
 		} catch(EOFException e) {
@@ -39,13 +48,18 @@ public class Session {
 	}
 
 	public void write(SocketMsg msg) throws IOException {
-		oStream.writeInt(42);
+		oStream.writeInt(magicB);
 		msg.serialize(oStream);
-		oStream.writeInt(23);
+		oStream.writeInt(magicA);
+	}
+	
+	public SocketMsg query(SocketMsg msg) throws IOException {
+		write(msg);
+		return read();
 	}
 
 	void close() throws IOException {
-		connection.close();
+		session.close();
 	}
 
 }
