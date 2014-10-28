@@ -1,9 +1,7 @@
 package socket;
 
-import java.io.EOFException;
 import java.io.IOException;
 
-import msgs.CharSeq;
 import msgs.LogOff;
 import msgs.SocketMsg;
 
