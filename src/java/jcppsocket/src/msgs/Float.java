@@ -51,11 +51,11 @@ public class Float extends SocketMsg {
 		super.dataOrg = DataType.SINGLE_DO;
 	}
 
-	void set(final float value) {
+	public void set(final float value) {
 		this.value = value;
 	}
 
-	float get() {
+	public float get() {
 		return this.value;
 	}
 

@@ -50,11 +50,11 @@ public class Double extends SocketMsg {
 		super.dataOrg = DataType.SINGLE_DO;
 	}
 	
-	void set(final double value) {
+	public void set(final double value) {
 		this.value = value;
 	}
 	
-	double get() {
+	public double get() {
 		return value;
 	}
 	

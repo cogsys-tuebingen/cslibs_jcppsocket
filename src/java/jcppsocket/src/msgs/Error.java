@@ -44,12 +44,12 @@ public class Error extends SocketMsg {
 		super.type = DataType.ERROR_T;
 	}
 	
-	void set(String msg) {
+	public void set(String msg) {
 		this.msg 	   =  "Error : '" + msg + "'";
 		super.size = this.msg.length();
 	}
 	
-	String get() {
+	public String get() {
 		return this.msg;
 	}
 	
