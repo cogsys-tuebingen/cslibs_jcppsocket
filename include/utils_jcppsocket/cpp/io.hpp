@@ -6,6 +6,7 @@
 #include "serialize.hpp"
 
 #include "session.h"
+#include "server_socket.hpp"
 
 /// SYSTEM
 #include <iostream>
@@ -48,17 +49,17 @@ inline void getClientSession(const std::string            &server_name,
     session.reset(new Session<MagicA, MagicB>(socket, service));
 }
 
-inline void getServerSocket(const int          port,
-                            IOServicePtr      &io_service,
-                            IOServerSocketPtr &socket)
+inline void getServerSocket(const int port,
+                            ServerSocket::Ptr &socket)
 {
-    socket.reset(new boost::asio::ip::tcp::acceptor(
-                 *io_service,
-                 boost::asio::ip::tcp::endpoint(
-                 boost::asio::ip::tcp::v4(),
-                 port)));
+    socket.reset(new ServerSocket);
+    socket->io_service.reset(new boost::asio::io_service);
+    socket->io_accecptor.reset(new boost::asio::ip::tcp::acceptor(
+                                   *(socket->io_service),
+                                   boost::asio::ip::tcp::endpoint(
+                                   boost::asio::ip::tcp::v4(),
+                                   port)));
 }
-
 
 
 //// ----------------------------- old api -------------------------------- ///

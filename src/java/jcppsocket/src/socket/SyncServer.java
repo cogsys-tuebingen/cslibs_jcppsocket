@@ -5,19 +5,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class SyncServer extends Thread
 {
-	private ServerSocket     serverSocket;
-	private ThreadPool		 threadPool;
-	private ProviderFactory  providerFactory;
+	private ServerSocket       serverSocket;
+	private ThreadPoolExecutor threadPool; 
+	private ProviderFactory    providerFactory;
+	private int				   maxSessions;
 
 
 	public SyncServer(final int port, final int maxSessions) throws IOException {
-		this.serverSocket = new ServerSocket(port);
+		this.serverSocket  = new ServerSocket(port);
 		this.serverSocket.setSoTimeout(10000);
-		this.threadPool   = new ThreadPool(maxSessions);
-
+		this.maxSessions   = maxSessions;
+		this.threadPool   = (ThreadPoolExecutor) Executors.newFixedThreadPool(maxSessions);
 	}
 
 	public void setProviderFactory(ProviderFactory fac) {
@@ -46,9 +49,11 @@ public class SyncServer extends Thread
 
 				if(providerFactory != null) {
 					Session session = new Session(connection);
-					if(!threadPool.execute(providerFactory.getInstance(session))) {
+					if(threadPool.getActiveCount() == maxSessions) {
 						System.err.println("Dropped connection!");
 						session.close();
+					} else {
+						threadPool.execute(providerFactory.getInstance(session));
 					}
 				}
 			} catch(SocketTimeoutException s) {

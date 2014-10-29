@@ -5,7 +5,7 @@ import java.io.IOException;
 import msgs.LogOff;
 import msgs.SocketMsg;
 
-class ServerTest {
+class TestServer {
 	public static void main(String [] args) {
         ProviderFactory strPrFac =  new ProviderFactory() {
             class StringProvider extends Provider {

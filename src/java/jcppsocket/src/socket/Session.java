@@ -19,13 +19,15 @@ public class Session {
 
 	public Session(Socket session) throws IOException {
 		this.session = session;
-		this.iStream    = new DataInputStream(this.session.getInputStream());
-		this.oStream	= new DataOutputStream(this.session.getOutputStream());
+		this.iStream = new DataInputStream(this.session.getInputStream());
+		this.oStream = new DataOutputStream(this.session.getOutputStream());
 	}
 
 	public Session(Socket session, final int magicA, final int magicB) 
 			throws IOException {
 		this.session = session;
+		this.iStream = new DataInputStream(this.session.getInputStream());
+		this.oStream = new DataOutputStream(this.session.getOutputStream());
 		this.magicA  = magicA;
 		this.magicB  = magicB;
 	}

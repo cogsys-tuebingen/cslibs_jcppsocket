@@ -5,15 +5,17 @@ import msgs.Error;
 import msgs.SocketMsg;
 
 
-class ClientTest {
+class TestClient {
 	public static void main(String [] args) {
 		SyncClient sc = new SyncClient("127.0.0.1", 6666);
-		
+				
 		String testStr 	= "I test if i decide to test!";
 		CharSeq seq 	= new CharSeq();
 		seq.set(testStr.getBytes());
 		
 		sc.connect();
+		System.out.println("Connected ?" + sc.isConnected());
+		
 		SocketMsg resp = sc.query(seq);
 		
 		if(resp == null) {
@@ -33,5 +35,7 @@ class ClientTest {
 		}
 		
 		sc.disconnect();
+		
+		System.out.println("Tested and was good!");
 	}
 }

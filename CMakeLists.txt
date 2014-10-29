@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(utils_jcppsocket)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED utils_boost_general)
 
 find_package(Boost REQUIRED system thread)
 
@@ -25,8 +25,11 @@ add_library(utils_jcppsocket
     include/utils_jcppsocket/cpp/serialize.hpp
     include/utils_jcppsocket/cpp/socket_msgs.hpp
     include/utils_jcppsocket/cpp/service_provider.hpp
+    include/utils_jcppsocket/cpp/provider.hpp
     include/utils_jcppsocket/cpp/hash.hpp
     include/utils_jcppsocket/cpp/session.hpp
+    include/utils_jcppsocket/cpp/sync_server.hpp
+    include/utils_jcppsocket/cpp/server_socket.hpp
     include/utils_jcppsocket/cpp/socket_msgs.h
     include/utils_jcppsocket/cpp/session.h
     include/utils_jcppsocket/cpp/sync_client.h

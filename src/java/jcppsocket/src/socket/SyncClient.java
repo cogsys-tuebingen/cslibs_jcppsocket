@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import msgs.LogOff;
 import msgs.SocketMsg;
 
 public class SyncClient {
