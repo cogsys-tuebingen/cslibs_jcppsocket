@@ -23,7 +23,7 @@ bool SyncServer::startService()
     }
 
     try {
-        aquireServerSocket(server_port_,
+        getServerSocket(server_port_,
                            io_service_,
                            io_socket_);
     } catch (const std::exception &e) {
@@ -107,7 +107,7 @@ void SyncServer::run()
             SocketMsg::Ptr request;
             SocketMsg::Ptr response;
             try {
-                server::read(request, *io_session_);
+                io::server::read(request, *io_session_);
             } catch (const std::exception &e) {
                 std::cerr << e.what() << std::endl;
                 break;
@@ -126,7 +126,7 @@ void SyncServer::run()
             }
 
             try {
-                server::write(response, *io_session_);
+                io::server::write(response, *io_session_);
             } catch (const std::exception &e) {
                 std::cerr << e.what() << std::endl;
                 break;

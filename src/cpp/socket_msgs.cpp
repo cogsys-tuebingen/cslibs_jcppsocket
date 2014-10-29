@@ -12,8 +12,8 @@ template
 class VectorMsg<float>;
 template
 class VectorMsg<char>;
-template
 /// VALUES
+template
 class ValueMsg<double>;
 template
 class ValueMsg<int>;

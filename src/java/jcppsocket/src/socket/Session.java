@@ -11,7 +11,7 @@ import msgs.LogOff;
 import msgs.SocketMsg;
 
 public class Session {
-	private Socket 			 session = null;
+	private Socket 			 session    = null;
 	private DataInputStream  iStream 	= null;
 	private DataOutputStream oStream 	= null;
 	private int				 magicA		= 23;
@@ -22,9 +22,9 @@ public class Session {
 		this.iStream    = new DataInputStream(this.session.getInputStream());
 		this.oStream	= new DataOutputStream(this.session.getOutputStream());
 	}
-	
+
 	public Session(Socket session, final int magicA, final int magicB) 
-		throws IOException {
+			throws IOException {
 		this.session = session;
 		this.magicA  = magicA;
 		this.magicB  = magicB;
@@ -34,59 +34,55 @@ public class Session {
 		try {
 			int init = iStream.readInt();
 			if(init != magicA) {
-                throw new IOException("Wrong message initializer " + init + " !");
-            }
+				throw new IOException("Wrong message initializer " + init + " !");
+			}
 
 			SocketMsg inMsg = GenericDeserializer.deserialize(iStream);
 
 			int exit = iStream.readInt();
 			if(exit != magicB) {
-                throw new IOException("Wrong message terminator " + exit + " !");
-            }
+				throw new IOException("Wrong message terminator " + exit + " !");
+			}
 			return inMsg;
 		} catch(EOFException e) {
 			return new LogOff();
 		}
 	}
 
-    public <T extends SocketMsg> T read(Class<T> type) throws IOException {
-        int init = iStream.readInt();
-        if(init != magicA) {
-            throw new IOException("Wrong message initializer " + init + " !");
-        }
+	public <T extends SocketMsg> T read(Class<T> type) throws IOException {
+		int init = iStream.readInt();
+		if(init != magicA) {
+			throw new IOException("Wrong message initializer " + init + " !");
+		}
 
-        SocketMsg inMsg = GenericDeserializer.deserialize(iStream);
+		SocketMsg inMsg = GenericDeserializer.deserialize(iStream);
 
-        int exit = iStream.readInt();
-        if(exit != magicB) {
-            throw new IOException("Wrong message terminator " + exit + " !");
-        }
+		int exit = iStream.readInt();
+		if(exit != magicB) {
+			throw new IOException("Wrong message terminator " + exit + " !");
+		}
 
-        if (inMsg.getClass().isAssignableFrom(type)) {
-            return (T)inMsg;
-        } else {
-            return null;
-        }
-    }
+		if (inMsg.getClass().isAssignableFrom(type)) {
+			return (T)inMsg;
+		} else {
+			return null;
+		}
+	}
 
 	public void write(SocketMsg msg) throws IOException {
 		oStream.writeInt(magicB);
 		msg.serialize(oStream);
 		oStream.writeInt(magicA);
 	}
-	
+
 	public SocketMsg query(SocketMsg msg) throws IOException {
 		write(msg);
 		return read();
 	}
 
-	public void close() {
-        try {
-            session.close();
-        } catch (IOException ex) {
-            // Just die
-            ex.printStackTrace();
-        }
+	public void close() throws IOException {
+		write(new LogOff());
+		session.close();
 	}
 
 }

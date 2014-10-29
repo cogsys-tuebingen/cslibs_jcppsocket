@@ -31,13 +31,12 @@ public:
 
 
 private:
-    const std::string server_name_;
-    const int         server_port_;
+    const std::string    server_name_;
+    const int            server_port_;
 
-    bool              connected_;
+    bool                 connected_;
+    client::Session::Ptr session_;
 
-    io::IOSocketPtr   io_socket_;
-    io::IOServicePtr  io_service_;
 };
 }
 

@@ -1,12 +1,9 @@
 package socket;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import msgs.GenericDeserializer;
 import msgs.LogOff;
 import msgs.SocketMsg;
 
@@ -16,7 +13,7 @@ public class SyncClient {
 	private Session session = null;
 
 	public SyncClient(final String serverName, 
-					  final int	   serverPort) {
+			final int	   serverPort) {
 		this.serverName = serverName;
 		this.serverPort = serverPort;
 	}
@@ -32,7 +29,7 @@ public class SyncClient {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -40,15 +37,16 @@ public class SyncClient {
 		if(session == null) {
 			return false;
 		}
-		
+
+
 		try {
-			session.write(new LogOff());
 			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			session = null;
 			return false;
 		}
+
 		session = null;
 		return true;
 	}
@@ -57,10 +55,10 @@ public class SyncClient {
 		if(session == null) {
 			return new msgs.Error("Socket not connected!");
 		}
-		
+
 		try {
 			return session.query(out);
-				} catch (IOException e) {
+		} catch (IOException e) {
 			return new msgs.Error(e.toString());
 		}
 	}

@@ -5,6 +5,8 @@
 #include "socket_msgs.h"
 #include "serialize.hpp"
 
+#include "session.h"
+
 /// SYSTEM
 #include <iostream>
 #include <boost/shared_ptr.hpp>
@@ -28,6 +30,39 @@ inline std::string toString(const T &input){
     return ss.str();
 }
 
+template<int MagicA, int MagicB>
+inline void getClientSession(const std::string            &server_name,
+                             const int                     server_port,
+                             typename Session<MagicA, MagicB>::Ptr &session)
+{
+    IOServicePtr service(new boost::asio::io_service);
+    boost::asio::io_service                  &s = *service;
+    boost::asio::ip::tcp::resolver           io_resolver(s);
+    boost::asio::ip::tcp::resolver::query    io_query(server_name, toString(server_port),
+                                                   boost::asio::ip::resolver_query_base::numeric_service);
+    boost::asio::ip::tcp::resolver::iterator io_endpoint_iterator = io_resolver.resolve(io_query);
+
+    IOSocketPtr socket(new boost::asio::ip::tcp::socket(s));
+    boost::asio::connect(*socket, io_endpoint_iterator);
+
+    session.reset(new Session<MagicA, MagicB>(socket, service));
+}
+
+inline void getServerSocket(const int          port,
+                            IOServicePtr      &io_service,
+                            IOServerSocketPtr &socket)
+{
+    socket.reset(new boost::asio::ip::tcp::acceptor(
+                 *io_service,
+                 boost::asio::ip::tcp::endpoint(
+                 boost::asio::ip::tcp::v4(),
+                 port)));
+}
+
+
+
+//// ----------------------------- old api -------------------------------- ///
+
 inline void aquireClientSocket(const std::string    name,
                                const int            port,
                                IOServicePtr        &service,
@@ -45,17 +80,6 @@ inline void aquireClientSocket(const std::string    name,
 #else
 #warning "[utils_jcppsocket] Boost version of ASIO is too old!"
 #endif
-}
-
-inline void aquireServerSocket(const int          port,
-                               IOServicePtr      &service,
-                               IOServerSocketPtr &socket)
-{
-    socket.reset(new boost::asio::ip::tcp::acceptor(
-                *service,
-                 boost::asio::ip::tcp::endpoint(
-                     boost::asio::ip::tcp::v4(),
-                 port)));
 }
 
 template<int Magic_A, int Magic_B>

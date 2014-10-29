@@ -11,8 +11,7 @@ SyncClient::SyncClient(const std::string &server,
                const int port) :
     server_name_(server),
     server_port_(port),
-    connected_(false),
-    io_service_(new boost::asio::io_service)
+    connected_(false)
 {
 }
 
@@ -30,15 +29,14 @@ bool SyncClient::connect()
     }
 
     try {
-        aquireClientSocket(server_name_,
-                           server_port_,
-                           io_service_,
-                           io_socket_);
+        getClientSession<23,42>(server_name_, server_port_, session_);
         connected_ = true;
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         connected_ = false;
+        session_.reset();
     }
+
     return connected_;
 }
 
@@ -50,8 +48,7 @@ bool SyncClient::disconnect()
     }
 
     try {
-        SocketMsg::Ptr logoff(new LogOffMsg);
-        client::write(logoff, *io_socket_);
+        session_->close();
         connected_ = false;
     } catch(std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -69,10 +66,7 @@ bool SyncClient::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
     }
 
     try {
-
-        client::write(request, *io_socket_);
-        client::read(response, *io_socket_);
-
+        session_->query(request, response);
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return false;
