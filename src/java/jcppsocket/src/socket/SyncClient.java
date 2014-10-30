@@ -62,6 +62,32 @@ public class SyncClient {
 		}
 	}
 
+    public SocketMsg read() {
+        if (session == null) {
+            return new msgs.Error("Socket not connected!");
+        }
+
+        try {
+            return session.read();
+        } catch (IOException e) {
+            return new msgs.Error(e.toString());
+        }
+    }
+
+    public boolean write(SocketMsg msg) {
+        if (session == null) {
+            return false;
+        }
+
+        try {
+            session.write(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 	public boolean isConnected() {
 		if(session == null) {
 			return false;
