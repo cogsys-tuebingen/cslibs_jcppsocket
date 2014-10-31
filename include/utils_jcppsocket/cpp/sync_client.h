@@ -27,6 +27,18 @@ public:
         return query(ptr, response);
     }
 
+
+    template<typename T>
+    inline bool write(boost::shared_ptr<T> &request)
+    {
+        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(request);
+        return write(ptr);
+    }
+
+    bool write(SocketMsg::Ptr &request);
+    bool read(SocketMsg::Ptr &response);
+
+
     bool isConnected() const;
 
 

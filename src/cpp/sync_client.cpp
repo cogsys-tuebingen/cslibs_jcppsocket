@@ -76,6 +76,40 @@ bool SyncClient::query(SocketMsg::Ptr &request, SocketMsg::Ptr &response)
 
 }
 
+bool SyncClient::write(SocketMsg::Ptr &request)
+{
+    if(!connected_) {
+        std::cerr << "Error: Socket is not connected!" << std::endl;
+        return false;
+    }
+
+    try {
+        session_->write(request);
+    } catch( const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool SyncClient::read(SocketMsg::Ptr &response)
+{
+    if(!connected_) {
+        std::cerr << "Error: Socket is not connected!" << std::endl;
+        return false;
+    }
+
+    try {
+        session_->read(response);
+    } catch( const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 bool SyncClient::isConnected() const
 {
     return connected_;
