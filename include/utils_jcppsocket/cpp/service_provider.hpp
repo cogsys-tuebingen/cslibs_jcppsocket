@@ -6,7 +6,7 @@
 namespace utils_jcppsocket {
 class ServiceProvider {
 public:
-    typedef boost::shared_ptr<ServiceProvider> Ptr;
+    typedef std::shared_ptr<ServiceProvider> Ptr;
 
     virtual void process(const SocketMsg::Ptr &input,
                                SocketMsg::Ptr &output) = 0;

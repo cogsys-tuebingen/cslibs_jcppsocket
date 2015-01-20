@@ -11,7 +11,7 @@ namespace utils_jcppsocket {
 template<typename Provider>
 class SyncServer {
 public:
-    typedef boost::shared_ptr<SyncServer> Ptr;
+    typedef std::shared_ptr<SyncServer> Ptr;
 
     SyncServer(const int port,
                const int max_sessions = 2);

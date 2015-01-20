@@ -10,17 +10,17 @@
 
 /// SYSTEM
 #include <iostream>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/asio.hpp>
 
 namespace utils_jcppsocket {
 namespace io {
 
-typedef boost::shared_ptr
+typedef std::shared_ptr
         <boost::asio::ip::tcp::socket>   IOSocketPtr;
-typedef boost::shared_ptr
+typedef std::shared_ptr
         <boost::asio::ip::tcp::acceptor> IOServerSocketPtr;
-typedef boost::shared_ptr
+typedef std::shared_ptr
         <boost::asio::io_service>        IOServicePtr;
 
 

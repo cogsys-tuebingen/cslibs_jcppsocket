@@ -7,7 +7,7 @@ namespace utils_jcppsocket {
 class SyncClient
 {
 public:
-    typedef boost::shared_ptr<SyncClient> Ptr;
+    typedef std::shared_ptr<SyncClient> Ptr;
 
     SyncClient(const std::string &server,
                const int port);
@@ -21,17 +21,17 @@ public:
     bool query(SocketMsg::Ptr &request, SocketMsg::Ptr &response);
 
     template<typename T>
-    inline bool query(boost::shared_ptr<T> &request, SocketMsg::Ptr &response)
+    inline bool query(std::shared_ptr<T> &request, SocketMsg::Ptr &response)
     {
-        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(request);
+        SocketMsg::Ptr ptr = std::dynamic_pointer_cast<SocketMsg>(request);
         return query(ptr, response);
     }
 
 
     template<typename T>
-    inline bool write(boost::shared_ptr<T> &request)
+    inline bool write(std::shared_ptr<T> &request)
     {
-        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(request);
+        SocketMsg::Ptr ptr = std::dynamic_pointer_cast<SocketMsg>(request);
         return write(ptr);
     }
 

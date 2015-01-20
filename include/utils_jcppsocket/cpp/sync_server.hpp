@@ -64,7 +64,7 @@ void SyncServer<Provider>::run()
         if(boost::this_thread::interruption_requested())
             break;
 
-        boost::shared_ptr<boost::asio::ip::tcp::socket>
+        std::shared_ptr<boost::asio::ip::tcp::socket>
                 socket(new boost::asio::ip::tcp::socket(*(server_socket_->io_service)));
         boost::system::error_code err;
         server_socket_->io_accecptor->accept(*socket, err);

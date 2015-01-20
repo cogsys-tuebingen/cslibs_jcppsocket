@@ -9,13 +9,13 @@
 #include <istream>
 #include <inttypes.h>
 #include <vector>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace utils_jcppsocket {
 class SocketMsg
 {
 public:
-    typedef boost::shared_ptr<SocketMsg> Ptr;
+    typedef std::shared_ptr<SocketMsg> Ptr;
 
     void        serialize     (std::ostream &out) const;
     void        deserialize   (std::istream &in);
@@ -53,7 +53,7 @@ protected:
 //// ----------------------------------------------------------
 class LogOffMsg : public SocketMsg {
 public:
-    typedef boost::shared_ptr<LogOffMsg> Ptr;
+    typedef std::shared_ptr<LogOffMsg> Ptr;
 
     LogOffMsg(const int64_t id = 0,
               const serialization::Hash256 &hash = serialization::Hash256());
@@ -67,7 +67,7 @@ protected:
 template<class T>
 class ValueMsg : public SocketMsg {
 public:
-    typedef boost::shared_ptr<ValueMsg<T> > Ptr;
+    typedef std::shared_ptr<ValueMsg<T> > Ptr;
 
     ValueMsg(const int64_t id = 0,
              const serialization::Hash256 &hash = serialization::Hash256());
@@ -87,7 +87,7 @@ private:
 //// ----------------------------------------------------------
 class ErrorMsg : public SocketMsg {
 public:
-    typedef boost::shared_ptr<ErrorMsg> Ptr;
+    typedef std::shared_ptr<ErrorMsg> Ptr;
 
     ErrorMsg(const int64_t id = 0,
              const serialization::Hash256 &hash = serialization::Hash256());
@@ -107,7 +107,7 @@ private:
 template<class T>
 class VectorMsg : public SocketMsg {
 public:
-    typedef boost::shared_ptr<VectorMsg<T> > Ptr;
+    typedef std::shared_ptr<VectorMsg<T> > Ptr;
 
     VectorMsg(const int64_t id = 0,
               const serialization::Hash256 &hash = serialization::Hash256());
@@ -147,7 +147,7 @@ protected:
 template<class T>
 class BlockMsg : public SocketMsg {
 public:
-    typedef boost::shared_ptr<BlockMsg<T> > Ptr;
+    typedef std::shared_ptr<BlockMsg<T> > Ptr;
 
     BlockMsg(const int64_t id = 0,
              const serialization::Hash256 &hash = serialization::Hash256());

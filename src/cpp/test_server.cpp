@@ -17,7 +17,7 @@ struct TestProvider : public Runnable {
         }
 
         utils_jcppsocket::LogOffMsg::Ptr logoff =
-                boost::dynamic_pointer_cast<utils_jcppsocket::LogOffMsg>(request);
+                std::dynamic_pointer_cast<utils_jcppsocket::LogOffMsg>(request);
         if(logoff) {
             return false;
         }

@@ -92,8 +92,8 @@ int main()
     std::cout << "--- sequence ---" << std::endl;
     boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
     if(socket.query(seq,in)) {
-        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
-        VectorMsg<double>::Ptr dat = boost::dynamic_pointer_cast<VectorMsg<double> >(in);
+        ErrorMsg::Ptr          err = std::dynamic_pointer_cast<ErrorMsg>(in);
+        VectorMsg<double>::Ptr dat = std::dynamic_pointer_cast<VectorMsg<double> >(in);
 
         if(err.get() != NULL) {
             std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
@@ -118,8 +118,8 @@ int main()
     start = boost::posix_time::microsec_clock::local_time();
 
     if(socket.query(block,in)) {
-        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
-        BlockMsg<double>::Ptr  dat = boost::dynamic_pointer_cast<BlockMsg<double> >(in);
+        ErrorMsg::Ptr          err = std::dynamic_pointer_cast<ErrorMsg>(in);
+        BlockMsg<double>::Ptr  dat = std::dynamic_pointer_cast<BlockMsg<double> >(in);
 
         if(err.get() != NULL) {
             std::cerr << "Got error [ " << err->get() << " ]" << std::endl;
@@ -152,8 +152,8 @@ int main()
     start = boost::posix_time::microsec_clock::local_time();
 
     if(socket.query(str_msg,in)) {
-        ErrorMsg::Ptr          err = boost::dynamic_pointer_cast<ErrorMsg>(in);
-        VectorMsg<char>::Ptr   dat = boost::dynamic_pointer_cast<VectorMsg<char> >(in);
+        ErrorMsg::Ptr          err = std::dynamic_pointer_cast<ErrorMsg>(in);
+        VectorMsg<char>::Ptr   dat = std::dynamic_pointer_cast<VectorMsg<char> >(in);
 
         if(err.get() != NULL) {
             std::cerr << "Got error [ " << err->get() << " ]" << std::endl;

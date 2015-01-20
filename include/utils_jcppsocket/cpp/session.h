@@ -6,7 +6,7 @@
 
 /// SYSTEM
 #include <iostream>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/asio.hpp>
 
 namespace utils_jcppsocket {
@@ -14,24 +14,24 @@ template<int MagicA, int MagicB>
 class Session
 {
 public:
-    typedef boost::shared_ptr<boost::asio::io_service>      Service;
-    typedef boost::shared_ptr<boost::asio::ip::tcp::socket> Socket;
-    typedef boost::shared_ptr<Session> Ptr;
+    typedef std::shared_ptr<boost::asio::io_service>      Service;
+    typedef std::shared_ptr<boost::asio::ip::tcp::socket> Socket;
+    typedef std::shared_ptr<Session> Ptr;
 
     Session(const Socket  &socket,
             const Service &service);
 
     template<typename T>
-    inline bool query(const boost::shared_ptr<T> &request, SocketMsg::Ptr &response)
+    inline bool query(const std::shared_ptr<T> &request, SocketMsg::Ptr &response)
     {
-        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(request);
+        SocketMsg::Ptr ptr = std::dynamic_pointer_cast<SocketMsg>(request);
         return query(ptr, response);
     }
 
     template<typename T>
-    inline bool write(const boost::shared_ptr<T> &out)
+    inline bool write(const std::shared_ptr<T> &out)
     {
-        SocketMsg::Ptr ptr = boost::dynamic_pointer_cast<SocketMsg>(out);
+        SocketMsg::Ptr ptr = std::dynamic_pointer_cast<SocketMsg>(out);
         return write(ptr);
     }
 
