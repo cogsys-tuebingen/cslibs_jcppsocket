@@ -1,7 +1,7 @@
 #ifndef SYNC_SERVER_HPP
 #define SYNC_SERVER_HPP
 
-#include <utils_jcppsocket/cpp/sync_server.h>
+#include "sync_server.h"
 
 namespace utils_jcppsocket {
 template<typename Provider>
@@ -9,7 +9,8 @@ SyncServer<Provider>::SyncServer(const int port,
                                  const int max_sessions) :
     server_port_(port),
     max_sessions_(max_sessions),
-    running_(false)
+    running_(false),
+    interrupt_requested_(false)
 {
 }
 
@@ -34,18 +35,15 @@ bool SyncServer<Provider>::startService()
     }
 
     running_ = true;
-    th_ = boost::thread(boost::bind(&SyncServer::run, this));
+    th_ = std::thread(std::bind(&SyncServer::run, this));
 }
 
 template<typename Provider>
 void SyncServer<Provider>::stopService()
 {
-
-    if(th_.interruption_requested())
+    if(!running_)
         return;
 
-    running_ = false;
-    th_.interrupt();
     th_.join();
     server_socket_->stop();
 }
@@ -59,11 +57,8 @@ bool SyncServer<Provider>::isRunnning()
 template<typename Provider>
 void SyncServer<Provider>::run()
 {
-    while(running_) {
-
-        if(boost::this_thread::interruption_requested())
-            break;
-
+    std::lock_guard<std::mutex> l(th_mutex_);
+    while(!interrupt_requested_) {
         std::shared_ptr<boost::asio::ip::tcp::socket>
                 socket(new boost::asio::ip::tcp::socket(*(server_socket_->io_service)));
         boost::system::error_code err;
@@ -84,9 +79,12 @@ void SyncServer<Provider>::run()
             continue;
         }
 
-        Runnable::Ptr provider(new Provider(session));
+        utils_threadpool::threading::Runnable::Ptr
+            provider(new Provider(session));
         threadpool_.add(provider);
     }
+
+    running_ = false;
 }
 }
 

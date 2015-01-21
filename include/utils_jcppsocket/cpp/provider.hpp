@@ -4,10 +4,10 @@
 /// COMPONENT
 #include "socket_msgs.h"
 #include "session.h"
-#include <utils_boost_general/multithreading/runnable.hpp>
+#include <utils_threadpool/threading/runnable.h>
 
 namespace utils_jcppsocket {
-class Provider : public Runnable {
+class Provider : public utils_threadpool::threading::Runnable {
 public:
     virtual void run() = 0;
 

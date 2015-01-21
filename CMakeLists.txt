@@ -14,7 +14,7 @@ else()
 endif()
 
 
-find_package(catkin REQUIRED utils_boost_general)
+find_package(catkin REQUIRED utils_threadpool)
 
 find_package(Boost REQUIRED system thread)
 

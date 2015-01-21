@@ -1,7 +1,7 @@
 #include <utils_jcppsocket/cpp/sync_server.h>
 #include <utils_jcppsocket/cpp/sync_server.hpp>
 
-struct TestProvider : public Runnable {
+struct TestProvider : public utils_threadpool::threading::Runnable {
     TestProvider(utils_jcppsocket::server::Session::Ptr &session) :
         session_(session)
     {

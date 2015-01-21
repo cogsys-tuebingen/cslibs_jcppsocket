@@ -4,8 +4,10 @@
 #include "io.hpp"
 #include "server_socket.hpp"
 #include "service_provider.hpp"
-#include <boost/thread.hpp>
-#include <utils_boost_general/multithreading/threadpool.h>
+
+#include <utils_threadpool/threading/threadpool.h>
+#include <atomic>
+#include <memory>
 
 namespace utils_jcppsocket {
 template<typename Provider>
@@ -27,10 +29,11 @@ private:
     ServerSocket::Ptr       server_socket_;
     const int               max_sessions_;
 
-    bool          running_;
-
-    boost::thread th_;
-    utils_boost_general::multithreading::ThreadPool threadpool_;
+    std::atomic_bool        running_;
+    std::atomic_bool        interrupt_requested_;
+    std::mutex              th_mutex_;
+    std::thread             th_;
+    utils_threadpool::threading::ThreadPool threadpool_;
 
     void run();
 };
