@@ -16,7 +16,7 @@ endif()
 
 find_package(catkin REQUIRED utils_threadpool)
 
-find_package(Boost REQUIRED system thread)
+find_package(Boost REQUIRED system)
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -34,20 +34,6 @@ include_directories(
 )
 
 add_library(utils_jcppsocket
-    include/utils_jcppsocket/cpp/io.hpp
-    include/utils_jcppsocket/cpp/serialize.hpp
-    include/utils_jcppsocket/cpp/socket_msgs.hpp
-    include/utils_jcppsocket/cpp/service_provider.hpp
-    include/utils_jcppsocket/cpp/provider.hpp
-    include/utils_jcppsocket/cpp/hash.hpp
-    include/utils_jcppsocket/cpp/session.hpp
-    include/utils_jcppsocket/cpp/sync_server.hpp
-    include/utils_jcppsocket/cpp/server_socket.hpp
-    include/utils_jcppsocket/cpp/socket_msgs.h
-    include/utils_jcppsocket/cpp/session.h
-    include/utils_jcppsocket/cpp/sync_client.h
-    include/utils_jcppsocket/cpp/sync_server.h
-
     src/cpp/session.cpp
     src/cpp/sync_client.cpp
     src/cpp/sync_server.cpp
@@ -57,7 +43,6 @@ add_library(utils_jcppsocket
 target_link_libraries(utils_jcppsocket
     ${Boost_LIBRARIES}
     ${catkin_LIBRARIES}
-    pthread
 )
 
 add_executable(utils_jcppsocket_test_client
@@ -66,6 +51,7 @@ add_executable(utils_jcppsocket_test_client
 
 target_link_libraries(utils_jcppsocket_test_client
     utils_jcppsocket
+    ${catkin_LIBRARIES}
 )
 
 add_executable(utils_jcppsocket_test_server
@@ -74,4 +60,5 @@ add_executable(utils_jcppsocket_test_server
 
 target_link_libraries(utils_jcppsocket_test_server
     utils_jcppsocket
+    ${catkin_LIBRARIES}
 )

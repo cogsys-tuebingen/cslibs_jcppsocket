@@ -7,7 +7,7 @@
 /// SYSTEM
 #include <iostream>
 #include <boost/assign.hpp>
-#include <boost/thread.hpp>
+#include <thread>
 
 using namespace std;
 using namespace utils_jcppsocket;
@@ -15,7 +15,7 @@ using namespace serialization;
 
 struct Poller {
     void run() {
-        boost::thread t(boost::bind(&Poller::doRun, this));
+        std::thread t(std::bind(&Poller::doRun, this));
     }
 
     void doRun() {
