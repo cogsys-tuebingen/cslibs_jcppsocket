@@ -1,7 +1,7 @@
 /// PROJECT
 #include <utils_jcppsocket/cpp/socket_msgs.hpp>
 
-using namespace utils_jcppsocket;
+namespace utils_jcppsocket {
 
 /// SEQUENCES
 template
@@ -30,3 +30,5 @@ template
 class BlockMsg<double>;
 template
 class BlockMsg<char>;
+
+}

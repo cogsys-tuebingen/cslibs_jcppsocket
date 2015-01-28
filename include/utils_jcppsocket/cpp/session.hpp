@@ -85,6 +85,8 @@ bool Session<MagicA, MagicB>::write(const SocketMsg::Ptr &msg)
     magic_b.serialize(request_buffer);
 
     boost::asio::write(*socket_, request);
+
+    return true;
 }
 
 template<int MagicA, int MagicB>
@@ -92,6 +94,7 @@ bool Session<MagicA, MagicB>::query(const SocketMsg::Ptr &out, SocketMsg::Ptr &i
 {
     write(out);
     read(in);
+    return true;
 }
 
 template<int MagicA, int MagicB>
@@ -100,6 +103,7 @@ bool Session<MagicA, MagicB>::close()
     LogOffMsg::Ptr logoff(new LogOffMsg);
     write(logoff);
     socket_->close();
+    return true;
 }
 }
 #endif // SESSION_HPP
