@@ -3,6 +3,7 @@ package msgs;
 
 
 public class DataType {
+	final static int LOGGED_ON_T = -4;
 	final static int LOGOFF_T	 = -3;
 	final static int ERROR_T     = -2;
 	final static int UNDEF_T     = -1;
@@ -39,6 +40,8 @@ public class DataType {
 			return new msgs.Char();
 		case LOGOFF_T:
 			return new msgs.LogOff();
+		case LOGGED_ON_T:
+			return new msgs.LoggedOn();
 		default:
 			if(notYetAvailable(type))
 				return new msgs.Error("Not yet available data type!");

@@ -77,6 +77,9 @@ void SyncServer<Provider>::run()
             session->write(error);
             session->close();
             continue;
+        } else {
+            LoggedOnMsg::Ptr logon(new LoggedOnMsg);
+            session->write(logon);
         }
 
         utils_threadpool::threading::Runnable::Ptr

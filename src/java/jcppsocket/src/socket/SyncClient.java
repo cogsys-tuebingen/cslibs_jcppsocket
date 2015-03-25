@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import msgs.LoggedOn;
 import msgs.SocketMsg;
 
 public class SyncClient {
@@ -22,6 +23,14 @@ public class SyncClient {
 			try {
 				Socket socket = new Socket(serverName, serverPort);
 				session = new Session(socket, 42, 23);
+				
+				SocketMsg response = session.read();
+				if(!(response instanceof LoggedOn)) {
+					disconnect();
+					System.out.println("No logon!");
+					return false;
+				}
+				
 			} catch (UnknownHostException e) {
 				return false;
 			} catch (IOException e) {

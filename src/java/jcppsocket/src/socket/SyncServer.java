@@ -51,8 +51,12 @@ public class SyncServer extends Thread
 					Session session = new Session(connection);
 					if(threadPool.getActiveCount() == maxSessions) {
 						System.err.println("Dropped connection!");
+						msgs.Error err = new msgs.Error("Too many connections!");
+						session.write(err);
 						session.close();
 					} else {
+						msgs.LoggedOn logon = new msgs.LoggedOn();
+						session.write(logon);
 						threadPool.execute(providerFactory.getInstance(session));
 					}
 				}

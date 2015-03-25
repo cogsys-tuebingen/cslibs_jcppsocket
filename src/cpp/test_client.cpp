@@ -14,17 +14,30 @@ using namespace utils_jcppsocket;
 using namespace serialization;
 
 struct Poller {
-    void run() {
-        std::thread t(std::bind(&Poller::doRun, this));
+    ~Poller() {
+        t.join();
+    }
+
+    void run(unsigned int i) {
+        id = i;
+        std::cout << "--- " << id << " ---" << std::endl;
+        t = std::thread(std::bind(&Poller::doRun, this));
     }
 
     void doRun() {
+
         SyncClient socket("localhost", 6666);
-        socket.connect();
-        while(true) {
-            SocketMsg::Ptr in;
+        if(!socket.connect()) {
+            std::cerr << id << " : Master, I failed to poll!" << std::endl;
+            return;
         }
+
+        std::cout <<  id << " : Master, I polled!" << std::endl;
     }
+
+    std::thread t;
+    unsigned int id;
+
 };
 
 int main()
@@ -173,13 +186,13 @@ int main()
     if(!socket.disconnect())
         std::cerr << "error disconnecting!" << std::endl;
 
-    for(int i = 0 ; i < 10; ++i) {
-        Poller p;
-        p.run();
+
+    std::vector<Poller> pollers(20);
+    for(unsigned int i = 0 ; i < 20; ++i) {
+        pollers.at(i).run(i);
     }
 
     sleep(10);
-
 
     return 0;
 }

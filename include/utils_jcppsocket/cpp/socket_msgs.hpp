@@ -38,6 +38,9 @@ inline bool getMsg(const int32_t type, const int64_t data_org,
     case serialization::logoff_t:
         ptr.reset(new LogOffMsg);
         return true;
+    case serialization::logged_on_t:
+        ptr.reset(new LoggedOnMsg);
+        return true;
     case serialization::char_t:
         return getDataOrg<char>(data_org, ptr);
     case serialization::uchar_t:
@@ -205,6 +208,23 @@ void LogOffMsg::serializeData(std::ostream &out) const
 }
 
 void LogOffMsg::deserializeData(std::istream &in)
+{
+}
+
+LoggedOnMsg::LoggedOnMsg(const int64_t id, const serialization::Hash256 &hash) :
+    SocketMsg(id,
+              hash,
+              serialization::logged_on_t,
+              serialization::single_do,
+              0)
+{
+}
+
+void LoggedOnMsg::serializeData(std::ostream &out) const
+{
+}
+
+void LoggedOnMsg::deserializeData(std::istream &in)
 {
 }
 

@@ -65,7 +65,7 @@ public class Session {
 		}
 
 		if (inMsg.getClass().isAssignableFrom(type)) {
-			return (T)inMsg;
+			return (T) inMsg;
 		} else {
 			return null;
 		}

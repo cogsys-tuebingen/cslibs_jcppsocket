@@ -63,6 +63,21 @@ protected:
     void deserializeData(std::istream &in);
 };
 
+class LoggedOnMsg : public SocketMsg {
+public:
+    typedef std::shared_ptr<LoggedOnMsg> Ptr;
+
+    LoggedOnMsg(const int64_t id = 0,
+                const serialization::Hash256 &hash = serialization::Hash256());
+
+protected:
+    void serializeData  (std::ostream &out) const;
+    void deserializeData(std::istream &in);
+};
+
+
+
+
 //// ----------------------------------------------------------
 template<class T>
 class ValueMsg : public SocketMsg {

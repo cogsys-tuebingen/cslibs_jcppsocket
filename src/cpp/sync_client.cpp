@@ -37,6 +37,17 @@ bool SyncClient::connect()
         session_.reset();
     }
 
+    SocketMsg::Ptr response;
+    session_->read(response);
+
+    ErrorMsg::Ptr err = std::dynamic_pointer_cast<ErrorMsg>(response);
+
+    if(err.get() != nullptr) {
+        std::cerr << err->get() << std::endl;
+        disconnect();
+        connected_ = false;
+    }
+
     return connected_;
 }
 
