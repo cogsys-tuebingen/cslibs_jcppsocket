@@ -52,6 +52,7 @@ add_executable(utils_jcppsocket_test_client
 target_link_libraries(utils_jcppsocket_test_client
     utils_jcppsocket
     ${catkin_LIBRARIES}
+    pthread
 )
 
 add_executable(utils_jcppsocket_test_server
@@ -61,4 +62,5 @@ add_executable(utils_jcppsocket_test_server
 target_link_libraries(utils_jcppsocket_test_server
     utils_jcppsocket
     ${catkin_LIBRARIES}
+    pthread
 )
