@@ -29,13 +29,13 @@ struct Serializer {
     void serialize(std::ostream &out) const {
         const int max_idx = sizeof(T) - 1;
 
-        for(int i = 0 ; i < sizeof(T) ; ++i)
+        for(std::size_t i = 0 ; i < sizeof(T) ; ++i)
             out << bytes[max_idx - i];
     }
 
     void deserialize(std::istream &in) {
         const int max_idx = sizeof(T) - 1;
-        for(int i = 0 ; i < sizeof(T) ; ++i)
+        for(std::size_t i = 0 ; i < sizeof(T) ; ++i)
             bytes[max_idx - i] = in.get();
     }
 };
