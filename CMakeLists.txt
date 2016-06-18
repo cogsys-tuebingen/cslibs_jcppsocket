@@ -33,11 +33,14 @@ include_directories(
     include
 )
 
+file(GLOB_RECURSE include_files include/*.hpp include/*.h)
+
 add_library(utils_jcppsocket
     src/cpp/session.cpp
     src/cpp/sync_client.cpp
     src/cpp/sync_server.cpp
     src/cpp/socket_msgs.cpp
+    ${include_files}
 )
 
 target_link_libraries(utils_jcppsocket
@@ -47,6 +50,7 @@ target_link_libraries(utils_jcppsocket
 
 add_executable(utils_jcppsocket_test_client
     src/cpp/test_client.cpp
+    ${include_files}
 )
 
 target_link_libraries(utils_jcppsocket_test_client
@@ -57,6 +61,7 @@ target_link_libraries(utils_jcppsocket_test_client
 
 add_executable(utils_jcppsocket_test_server
     src/cpp/test_server.cpp
+    ${include_files}
 )
 
 target_link_libraries(utils_jcppsocket_test_server

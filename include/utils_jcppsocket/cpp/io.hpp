@@ -31,12 +31,18 @@ inline std::string toString(const T &input){
     return ss.str();
 }
 
+static boost::asio::io_service io_service_;
+struct NullDeleter {
+    template<typename T>
+    void operator()(T*) {}
+};
+
 template<int MagicA, int MagicB>
 inline void getClientSession(const std::string            &server_name,
                              const int                     server_port,
                              typename Session<MagicA, MagicB>::Ptr &session)
 {
-    IOServicePtr service(new boost::asio::io_service);
+    IOServicePtr service(&io_service_, NullDeleter());
     boost::asio::io_service                  &s = *service;
     boost::asio::ip::tcp::resolver           io_resolver(s);
     boost::asio::ip::tcp::resolver::query    io_query(server_name, toString(server_port),
