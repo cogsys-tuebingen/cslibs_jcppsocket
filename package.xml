@@ -10,6 +10,7 @@
   <maintainer email="richard.hanten@uni-tuebingen.de">hanten</maintainer>
   <license>BSD</license>
 
+  <author email="richard.hanten@uni-tuebingen.de">hanten</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>cslibs_threadpool</build_depend>
