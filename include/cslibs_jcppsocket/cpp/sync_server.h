@@ -5,11 +5,11 @@
 #include "server_socket.hpp"
 #include "service_provider.hpp"
 
-#include <utils_threadpool/threading/threadpool.h>
+#include <cslibs_threadpool/threading/threadpool.h>
 #include <atomic>
 #include <memory>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 template<typename Provider>
 class SyncServer {
 public:
@@ -33,7 +33,7 @@ private:
     std::atomic_bool        interrupt_requested_;
     std::mutex              th_mutex_;
     std::thread             th_;
-    utils_threadpool::threading::ThreadPool threadpool_;
+    cslibs_threadpool::threading::ThreadPool threadpool_;
 
     void run();
 };

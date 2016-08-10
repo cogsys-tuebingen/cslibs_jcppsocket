@@ -1,6 +1,6 @@
-#include <utils_jcppsocket/cpp/session.hpp>
+#include <cslibs_jcppsocket/cpp/session.hpp>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 
 template
 class Session<23,42>;

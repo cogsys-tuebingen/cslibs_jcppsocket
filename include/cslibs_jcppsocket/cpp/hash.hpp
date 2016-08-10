@@ -6,7 +6,7 @@
 #include <istream>
 #include <stdint.h>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 namespace serialization {
 
 template<int n_bits>

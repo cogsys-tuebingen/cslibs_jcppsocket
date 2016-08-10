@@ -9,7 +9,7 @@
 #include <memory>
 #include <boost/asio.hpp>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 template<int MagicA, int MagicB>
 class Session
 {

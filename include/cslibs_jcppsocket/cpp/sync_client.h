@@ -3,7 +3,7 @@
 
 #include "io.hpp"
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 class SyncClient
 {
 public:

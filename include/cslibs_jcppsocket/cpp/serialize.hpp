@@ -9,7 +9,7 @@
 /// PROJECT
 #include "hash.hpp"
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 namespace serialization {
 template<typename T>
 struct Serializer {

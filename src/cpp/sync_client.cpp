@@ -1,10 +1,10 @@
 /// HEADER
-#include <utils_jcppsocket/cpp/sync_client.h>
+#include <cslibs_jcppsocket/cpp/sync_client.h>
 
 /// PROJECT
-#include <utils_jcppsocket/cpp/serialize.hpp>
+#include <cslibs_jcppsocket/cpp/serialize.hpp>
 
-using namespace utils_jcppsocket;
+using namespace cslibs_jcppsocket;
 using namespace io;
 
 SyncClient::SyncClient(const std::string &server,

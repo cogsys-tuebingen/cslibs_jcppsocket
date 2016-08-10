@@ -4,7 +4,7 @@
 #include <memory>
 #include <boost/asio.hpp>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 struct ServerSocket {
     typedef std::shared_ptr<ServerSocket> Ptr;
 

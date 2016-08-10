@@ -1,14 +1,14 @@
-#include <utils_jcppsocket/cpp/sync_server.h>
-#include <utils_jcppsocket/cpp/sync_server.hpp>
+#include <cslibs_jcppsocket/cpp/sync_server.h>
+#include <cslibs_jcppsocket/cpp/sync_server.hpp>
 
-struct TestProvider : public utils_threadpool::threading::Runnable {
-    TestProvider(utils_jcppsocket::server::Session::Ptr &session) :
+struct TestProvider : public cslibs_threadpool::threading::Runnable {
+    TestProvider(cslibs_jcppsocket::server::Session::Ptr &session) :
         session_(session)
     {
     }
 
     bool run() {
-        utils_jcppsocket::SocketMsg::Ptr request;
+        cslibs_jcppsocket::SocketMsg::Ptr request;
         try {
             session_->read(request);
         } catch (const std::exception &e) {
@@ -16,8 +16,8 @@ struct TestProvider : public utils_threadpool::threading::Runnable {
             return false;
         }
 
-        utils_jcppsocket::LogOffMsg::Ptr logoff =
-                std::dynamic_pointer_cast<utils_jcppsocket::LogOffMsg>(request);
+        cslibs_jcppsocket::LogOffMsg::Ptr logoff =
+                std::dynamic_pointer_cast<cslibs_jcppsocket::LogOffMsg>(request);
         if(logoff) {
             return false;
         }
@@ -33,12 +33,12 @@ struct TestProvider : public utils_threadpool::threading::Runnable {
         return true;
     }
 
-    utils_jcppsocket::server::Session::Ptr session_;
+    cslibs_jcppsocket::server::Session::Ptr session_;
 };
 
 int main(int argc, char *argv[])
 {
-    utils_jcppsocket::SyncServer<TestProvider> s(6666);
+    cslibs_jcppsocket::SyncServer<TestProvider> s(6666);
     s.startService();
 
     while(true) {

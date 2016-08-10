@@ -7,7 +7,7 @@
 /// SYSTEM
 #include <stdexcept>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 namespace {
 template<typename T>
 inline bool getDataOrg(const int32_t data_org, SocketMsg::Ptr &ptr)

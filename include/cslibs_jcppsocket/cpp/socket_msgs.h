@@ -11,7 +11,7 @@
 #include <vector>
 #include <memory>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 class SocketMsg
 {
 public:

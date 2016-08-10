@@ -13,7 +13,7 @@
 #include <memory>
 #include <boost/asio.hpp>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 namespace io {
 
 typedef std::shared_ptr
@@ -85,7 +85,7 @@ inline void aquireClientSocket(const std::string    name,
 #if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::connect(*socket, endpoint_iterator);
 #else
-#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#warning "[cslibs_jcppsocket] Boost version of ASIO is too old!"
 #endif
 }
 
@@ -115,7 +115,7 @@ inline void readIn(SocketMsg::Ptr               &data,
 #if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::read(in, header_stream, boost::asio::transfer_exactly(52 + 4), err);
 #else
-#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#warning "[cslibs_jcppsocket] Boost version of ASIO is too old!"
 #endif
 
     if(err)
@@ -148,7 +148,7 @@ inline void readIn(SocketMsg::Ptr               &data,
 #if (BOOST_VERSION / 100000) >= 1 && (BOOST_VERSION / 100 % 1000) >= 47
     boost::asio::read(in,  data_stream, boost::asio::transfer_exactly(size.value + 4), err);
 #else
-#warning "[utils_jcppsocket] Boost version of ASIO is too old!"
+#warning "[cslibs_jcppsocket] Boost version of ASIO is too old!"
 #endif
 
     if(err)

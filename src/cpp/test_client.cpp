@@ -1,8 +1,8 @@
 /// HEADER
-#include <utils_jcppsocket/cpp/sync_client.h>
+#include <cslibs_jcppsocket/cpp/sync_client.h>
 
 /// PROJECT
-#include <utils_jcppsocket/cpp/socket_msgs.h>
+#include <cslibs_jcppsocket/cpp/socket_msgs.h>
 
 /// SYSTEM
 #include <iostream>
@@ -10,7 +10,7 @@
 #include <thread>
 
 using namespace std;
-using namespace utils_jcppsocket;
+using namespace cslibs_jcppsocket;
 using namespace serialization;
 
 struct Poller {

@@ -1,7 +1,7 @@
 /// PROJECT
-#include <utils_jcppsocket/cpp/socket_msgs.hpp>
+#include <cslibs_jcppsocket/cpp/socket_msgs.hpp>
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 
 /// SEQUENCES
 template

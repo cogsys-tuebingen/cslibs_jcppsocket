@@ -3,7 +3,7 @@
 
 #include "sync_server.h"
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 template<typename Provider>
 SyncServer<Provider>::SyncServer(const int port,
                                  const int max_sessions) :
@@ -82,7 +82,7 @@ void SyncServer<Provider>::run()
             session->write(logon);
         }
 
-        utils_threadpool::threading::Runnable::Ptr
+        cslibs_threadpool::threading::Runnable::Ptr
             provider(new Provider(session));
         threadpool_.add(provider);
     }

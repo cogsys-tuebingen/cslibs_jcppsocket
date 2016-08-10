@@ -3,7 +3,7 @@
 
 #include "socket_msgs.h"
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 class ServiceProvider {
 public:
     typedef std::shared_ptr<ServiceProvider> Ptr;

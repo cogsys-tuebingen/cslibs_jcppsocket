@@ -7,7 +7,7 @@
 /// COMPONENT
 #include "serialize.hpp"
 
-namespace utils_jcppsocket {
+namespace cslibs_jcppsocket {
 template<int MagicA, int MagicB>
 Session<MagicA, MagicB>::Session(const Socket &socket,
                                  const Service &service) :

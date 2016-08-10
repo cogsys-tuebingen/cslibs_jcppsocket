@@ -51,6 +51,7 @@ public class Session {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends SocketMsg> T read(Class<T> type) throws IOException {
 		int init = iStream.readInt();
 		if(init != magicA) {
