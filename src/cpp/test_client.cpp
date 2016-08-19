@@ -6,7 +6,6 @@
 
 /// SYSTEM
 #include <iostream>
-#include <boost/assign.hpp>
 #include <thread>
 
 using namespace std;
