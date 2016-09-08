@@ -35,6 +35,7 @@ bool SyncClient::connect()
         std::cerr << e.what() << std::endl;
         connected_ = false;
         session_.reset();
+        return false;
     }
 
     SocketMsg::Ptr response;
